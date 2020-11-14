@@ -82,7 +82,7 @@ export default function App() {
       </ScrollView>
       <View style={styles.navbar}>
         <Text style={{ fontWeight: "bold", fontSize: 25, color: "pink" }}>
-          COLOR
+          SOUND
         </Text>
       </View>
       <View style={styles.bottombar}>

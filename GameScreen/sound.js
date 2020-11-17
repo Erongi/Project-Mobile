@@ -6,28 +6,47 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Vibration,
   ScrollView,
   SafeAreaView,
 } from "react-native";
+import { Audio } from "expo-av";
 
-export default function App() {
+export default function App(props) {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const [Penalty, setPenalty] = useState(0);
   const [count, setCount] = useState(0);
   const [GameText, setGameText] = useState("Press Me");
   const [TextTime, setTextTime] = useState(0);
   const [timeStart, settimeStart] = useState(0);
+  // const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    this.sound = new Audio.Sound();
+    const status = {
+      shouldPlay: false,
+    };
+    this.sound.loadAsync(require("../assets/scream.mp3"), status, false);
+  });
+
+  function playSound() {
+    console.log("play");
+    this.sound.playAsync();
+  }
+  function stopSound() {
+    console.log("stop");
+    this.sound.stopAsync();
+  }
 
   const startTheGame = async () => {
     var RandomNumber = 1000 + Math.random() * (5000 - 1000);
     setGameText("Press here When you hear the sound.");
     await delay(RandomNumber);
-
+    playSound();
     settimeStart(performance.now());
   };
 
   const stopTheGame = () => {
+    stopSound();
     var time = Math.abs(performance.now() - timeStart);
     setTextTime((x) => x + time);
     console.log("time : ", time);
@@ -86,8 +105,8 @@ export default function App() {
         </Text>
       </View>
       <View style={styles.bottombar}>
-        <Button title="<--" />
-        <Button title="-" />
+        <Button title="<--" onPress={() => props.change(0)} />
+        <Button title="-" onPress={() => window.location.reload(false)} />
         <Button title="-->" />
       </View>
     </SafeAreaView>

@@ -82,7 +82,7 @@ const GameNavigator = () => {
         name="Hear"
         component={hear}
         options={{
-          title: "การได้ยิน",
+          title: "Hearing",
 
           headerStyle: {
             backgroundColor: "Transparent",
@@ -97,7 +97,7 @@ const GameNavigator = () => {
         name="Calculation"
         component={calculation}
         options={{
-          title: "การคำนวณ",
+          title: "Calculation",
 
           headerStyle: {
             backgroundColor: "Transparent",

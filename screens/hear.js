@@ -24,7 +24,7 @@ const renderPagination = (index, total, context) => {
 function hear({ navigation }) {
   return (
     <ImageBackground
-      source={require("../assets/bg-manu.jpg")}
+      source={require("../assets/background.jpg")}
       style={styles.bgimage}
     >
       <View style={{ flex: 1, alignItems: "center" }}>

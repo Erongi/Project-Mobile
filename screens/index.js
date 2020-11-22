@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "stretch",
-    width: "50%",
+    width: "55%",
   },
   bgimage: {
     flex: 1,

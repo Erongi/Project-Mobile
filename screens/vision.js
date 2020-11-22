@@ -24,7 +24,7 @@ const renderPagination = (index, total, context) => {
 function vision({ navigation }) {
   return (
     <ImageBackground
-      source={require("../assets/bg-manu.png")}
+      source={require("../assets/background.jpg")}
       style={styles.bgimage}
     >
       <View style={{ flex: 1, alignItems: "center" }}>

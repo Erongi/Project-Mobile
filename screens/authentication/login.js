@@ -44,7 +44,7 @@ export default function Login({ navigation }) {
     setModalVisible(!isModalVisible);
   };
   const switchToSignUp = () => {
-    props.navigation.replace("RegisterScreen");
+    navigation.navigate("Register");
   };
   return (
     <View style={styles.container}>
@@ -63,6 +63,10 @@ export default function Login({ navigation }) {
       />
       <TouchableOpacity style={styles.primary} onPress={toggleModal}>
         <Text style={{ color: "white" }}>LOG IN</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.signup} onPress={switchToSignUp}>
+        <Text style={{ color: "black" }}>SIGN UP</Text>
       </TouchableOpacity>
 
       <Modal isVisible={isModalVisible}>
@@ -175,5 +179,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 20,
+  },
+  signup: {
+    marginTop: 5,
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
   },
 });

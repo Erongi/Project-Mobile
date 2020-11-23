@@ -96,10 +96,21 @@ export default function App() {
     const Result2 = eval(First2 + Signarray2 + Second2);
 
     content = (
-      <View>
+      <View
+        style={{
+          flex: 1,
+          // justifyContent: "center",
+          // marginTop: Constants.statusBarHeight,
+          alignItems: "center",
+        }}
+      >
         <View>
           {/* <Text>Time:{Time}</Text> */}
-          <Text>Score:{Score}</Text>
+          <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
+            {"\n"}
+            Score : {Score}
+            {"\n"}
+          </Text>
         </View>
         <View style={styles.row}>
           <TouchableOpacity
@@ -109,7 +120,7 @@ export default function App() {
               CheckAns();
             }}
           >
-            <Text>
+            <Text style={styles.math}>
               {First1} {Signarray1} {Second1}
             </Text>
           </TouchableOpacity>
@@ -120,10 +131,15 @@ export default function App() {
               CheckAns();
             }}
           >
-            <Text>
+            <Text style={styles.math}>
               {First2} {Signarray2} {Second2}
             </Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.rule}>
+          <Text style={{ fontFamily: "kanit", fontSize: 25 }}>
+            {"\n"}Select the highest value of proposition on your screen.
+          </Text>
         </View>
       </View>
     );
@@ -175,13 +191,19 @@ export default function App() {
 
 const styles = StyleSheet.create({
   AnsBox: {
-    backgroundColor: "yellow",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#fd3a69",
+    // padding: 10,
     borderColor: "black",
-    borderWidth: 1,
-    height: 50,
-    width: 50,
+    borderWidth: 4,
+    height: 140,
+    width: 140,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 10,
+    marginTop: 10,
   },
   navbar: {
     alignItems: "center",
@@ -204,7 +226,7 @@ const styles = StyleSheet.create({
     // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
-    backgroundColor: "white",
+    backgroundColor: "#E5E7E9",
     marginHorizontal: 5,
     width: "90%",
   },
@@ -213,5 +235,13 @@ const styles = StyleSheet.create({
     // bottom: 50,
     flexDirection: "row",
     // position: "absolute",
+  },
+  math: {
+    fontFamily: "kanit",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  rule: {
+    padding: 20,
   },
 });

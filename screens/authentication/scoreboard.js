@@ -9,19 +9,21 @@ import {
   Image,
   ImageBackground,
   TextInput,
+  ScrollView,
 } from "react-native";
 import firebase from "firebase";
 
 export default function Scoreboard(hello) {
   const [scores, setScores] = useState([]);
 
-  // const a = firebase.auth().currentUser.email;
+  const user = firebase.auth().currentUser.email;
   // console.log(a);
 
   // const addScore = async () => {
   //   await firebase.firestore().collection("score").add({
-  //     name: "adad",
+  //     email: "adad",
   //     point: 5,
+  //     gameName: "Color",
   //   });
   // };
 
@@ -40,34 +42,81 @@ export default function Scoreboard(hello) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {/* <Button
+    <ScrollView>
+      <View style={styles.container}>
+        {/* <Button
         title="eiei"
         onPress={() => {
           addScore();
         }}
       /> */}
-      <Text style={(styles.settext, { top: 20 })}>
-        <Text style={styles.text1}>React </Text>
-        <Text style={styles.text2}>Reaction</Text>
-      </Text>
-      {scores.map((forn) => {
-        return (
-          <Text style={styles.scoretext} key={forn.name}>
-            {forn.name}
-            {forn.point}
+        <Text style={styles.settext}>
+          <Text style={{ color: "#d36764", fontSize: 30, fontFamily: "kanit" }}>
+            React{" "}
           </Text>
-        );
-      })}
-    </View>
+          <Text style={{ color: "black", fontSize: 30, fontFamily: "kanit" }}>
+            Reaction
+          </Text>
+        </Text>
+        <View
+          style={{
+            borderColor: "black",
+            borderWidth: 2,
+            width: "80%",
+            alignItems: "center",
+            marginTop: 20,
+            backgroundColor: "#D7BDE2",
+          }}
+        >
+          <Text style={styles.headertext}>Score Board</Text>
+        </View>
+        {scores.map((data) => {
+          if (data.email == user) {
+            return (
+              <View style={styles.containerData}>
+                <View
+                  style={{
+                    borderColor: "black",
+                    borderWidth: 2,
+                    width: "50%",
+                    backgroundColor: "white",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={styles.scoretext}>{data.gameName}</Text>
+                </View>
+                <View
+                  style={{
+                    borderColor: "black",
+                    borderWidth: 2,
+                    width: "50%",
+                    alignItems: "flex-end",
+                    backgroundColor: "white",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={styles.scoretext}>{data.point}</Text>
+                </View>
+              </View>
+            );
+          }
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
     alignItems: "center",
+    backgroundColor: "#D0D3D4",
+  },
+  containerData: {
+    width: "80%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   exitbt: {
     width: 25,
@@ -78,19 +127,19 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "180deg" }],
   },
   scoretext: {
-    color: "red",
+    color: "black",
+    padding: 10,
+    fontFamily: "kanit",
+    fontSize: 20,
   },
   settext: {
     marginTop: "2%",
   },
-  text1: {
-    marginTop: "30%",
-    fontSize: 40,
-    color: "#ffce08",
-  },
-  text2: {
-    marginTop: "30%",
-    fontSize: 40,
-    color: "white",
+  headertext: {
+    color: "black",
+    fontWeight: "bold",
+    padding: 10,
+    fontFamily: "kanit",
+    fontSize: 30,
   },
 });

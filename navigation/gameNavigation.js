@@ -32,11 +32,41 @@ import Scoreboard from "../screens/authentication/scoreboard";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+const ScoreNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Scoreboard"
+        component={Scoreboard}
+        options={({ navigation }) => ({
+          title: " ",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            fontFamily: "kanit",
+            fontSize: 26,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.openDrawer()}
+              style={{ marginLeft: 20 }}
+            >
+              <Icon name="list" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const GameNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Log-in Screen"
+        name="Login"
         component={Login}
         option={{ headerShown: false }}
       />
@@ -265,18 +295,33 @@ const GameNavigator = () => {
           ),
         })}
       />
+
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={({ navigation }) => ({
+          title: "Register",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            // alignSelf: "center",
+          },
+        })}
+      />
     </Stack.Navigator>
   );
 };
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator edgeWidth={0}>
       {/* <Drawer.Screen name="test" component={Test} /> */}
       <Drawer.Screen name="Home" component={GameNavigator} />
       <Drawer.Screen name="testa" component={Login} />
       <Drawer.Screen name="Register" component={Register} />
-      <Drawer.Screen name="Score Board" component={Scoreboard} />
+      <Drawer.Screen name="Score Board" component={ScoreNavigator} />
     </Drawer.Navigator>
   );
 };

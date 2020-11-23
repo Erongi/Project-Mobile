@@ -13,6 +13,7 @@ import {
 
 export default function App() {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const [Start, setStart] = useState("Press here.");
   const [timeStart, settimeStart] = useState(0);
   const [Penalty, setPenalty] = useState(0);
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ export default function App() {
   const [magic, setMagic] = useState("#E5E7E9");
 
   const startTheGame = async () => {
+    setStart("");
     setMagic("black");
     var RandomNumber = 1000 + Math.random() * (5000 - 1000);
     setGameText("Press here When you feel vibration.");
@@ -73,11 +75,23 @@ export default function App() {
             if (count === 5) {
               setCount((x) => x + 1);
               stopTheGame();
-              setGameText("END");
+              setGameText("");
+              setStart("END");
               return;
             }
           }}
-        ></TouchableOpacity>
+        >
+          <Text
+            style={{
+              alignSelf: "center",
+              fontSize: 30,
+              color: "red",
+              margin: 20,
+            }}
+          >
+            {Start}
+          </Text>
+        </TouchableOpacity>
 
         <Text
           style={{

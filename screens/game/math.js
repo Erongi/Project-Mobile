@@ -77,58 +77,77 @@ export default function App() {
   if (Page === 1) {
     const Result = eval(First + Signarray + Second);
     content = (
-      <View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          justifyContent: "space-around",
+        }}
+      >
         <View>
-          <Text>
+          <Text style={{ fontFamily: "kanit", fontSize: 35 }}>
+            {"\n"}
             Score:{Score}
             {"\n"}
           </Text>
         </View>
         <View style={styles.proposition}>
-          <Text>
-            {First} 🔲 {Second} = {Result.toFixed(2)}
-            {"\n"}
+          <Text
+            style={{ fontFamily: "kanit", fontSize: 40, fontWeight: "bold" }}
+          >
+            {First} 🔲 {Second} = {Result.toFixed(2)} {"\n"}
           </Text>
         </View>
-        <View style={styles.row}>
-          <TouchableOpacity
-            style={styles.AnsBox}
-            onPress={() => {
-              setAns(0);
-              CheckAns();
-            }}
-          >
-            <Text>+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.AnsBox}
-            onPress={() => {
-              setAns(1);
-              CheckAns();
-            }}
-          >
-            <Text>-</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.row}>
-          <TouchableOpacity
-            style={styles.AnsBox}
-            onPress={() => {
-              setAns(2);
-              CheckAns();
-            }}
-          >
-            <Text>x</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.AnsBox}
-            onPress={() => {
-              setAns(3);
-              CheckAns();
-            }}
-          >
-            <Text>÷</Text>
-          </TouchableOpacity>
+        <View
+          style={{
+            flex: 1,
+
+            // width: "100%",
+            // borderColor: "black",
+            // borderWidth: 1,
+          }}
+        >
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.AnsBox}
+              onPress={() => {
+                setAns(0);
+                CheckAns();
+              }}
+            >
+              <Text style={styles.mathsign}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.AnsBox}
+              onPress={() => {
+                setAns(1);
+                CheckAns();
+              }}
+            >
+              <Text style={styles.mathsign}>-</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity
+              style={styles.AnsBox}
+              onPress={() => {
+                setAns(2);
+                CheckAns();
+              }}
+            >
+              <Text style={styles.mathsign}>x</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.AnsBox}
+              onPress={() => {
+                setAns(3);
+                CheckAns();
+              }}
+            >
+              <Text style={styles.mathsign}>÷</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -173,13 +192,19 @@ export default function App() {
 
 const styles = StyleSheet.create({
   AnsBox: {
-    backgroundColor: "yellow",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    // padding: 10,
     borderColor: "black",
     borderWidth: 1,
-    height: 50,
-    width: 50,
+    height: 140,
+    width: 140,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 10,
+    marginTop: 10,
   },
   navbar: {
     alignItems: "center",
@@ -190,11 +215,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
   },
+
   proposition: {
     // top: 150,
     // flex: 1,
-    borderColor: "black",
-    borderWidth: 1,
+    // borderColor: "black",
+    // borderWidth: 1,
   },
   container: {
     flex: 1,
@@ -204,7 +230,7 @@ const styles = StyleSheet.create({
     // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
-    backgroundColor: "white",
+    backgroundColor: "#E5E7E9",
     marginHorizontal: 5,
     width: "90%",
   },
@@ -214,5 +240,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     // position: "absolute",
+  },
+  mathsign: {
+    fontFamily: "kanit",
+    fontSize: 80,
   },
 });

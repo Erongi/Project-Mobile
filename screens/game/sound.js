@@ -13,6 +13,7 @@ import { Audio } from "expo-av";
 
 export default function App(props) {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const [Start, setStart] = useState("Press here.");
   const [Penalty, setPenalty] = useState(0);
   const [count, setCount] = useState(0);
   const [GameText, setGameText] = useState("Press The Box.");
@@ -39,6 +40,7 @@ export default function App(props) {
   }
 
   const startTheGame = async () => {
+    setStart("");
     setMagic("black");
     var RandomNumber = 1000 + Math.random() * (5000 - 1000);
     setGameText("Press here When you hear the sound.");
@@ -91,11 +93,23 @@ export default function App(props) {
             if (count === 5) {
               setCount((x) => x + 1);
               stopTheGame();
-              setGameText("END");
+              setGameText("");
+              setStart("END");
               return;
             }
           }}
-        ></TouchableOpacity>
+        >
+          <Text
+            style={{
+              alignSelf: "center",
+              fontSize: 30,
+              color: "red",
+              margin: 20,
+            }}
+          >
+            {Start}
+          </Text>
+        </TouchableOpacity>
         <Text
           style={{
             alignSelf: "center",

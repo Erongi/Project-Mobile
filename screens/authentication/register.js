@@ -11,30 +11,35 @@ import {
 } from "react-native";
 import firebase from "firebase";
 
-const signUp = (email, password) => {
-  console.log(email, password);
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(() => {
-      alert("User account created & signed in!");
-    })
-    .catch((error) => {
-      if (error.code === "auth/email-already-in-use") {
-        console.log("That email address is already in use!");
-      }
-
-      if (error.code === "auth/invalid-email") {
-        console.log("That email address is invalid!");
-      }
-
-      console.error(error);
-    });
-};
-
-export default function Register() {
+export default function Register({ navigation }) {
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
+
+  const signUp = (email, password) => {
+    console.log(email, password);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.navigate("Login");
+        alert("User account created & signed in!");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          console.log("That email address is already in use!");
+          alert("This email address is already in use!");
+        }
+
+        if (error.code === "auth/invalid-email") {
+          console.log("That email address is invalid!");
+          alert("This email address is already in use!");
+        }
+        // alert(
+        //   "This email address is already in use or This email address is invalid."
+        // );
+        // console.error(error);
+      });
+  };
 
   return (
     <View style={styles.container}>

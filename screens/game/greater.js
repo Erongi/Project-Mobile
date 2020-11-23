@@ -78,12 +78,22 @@ export default function App() {
   );
 
   if (Page === 1) {
-    // const Result = eval(First + Signarray + Second);
     content = (
-      <View>
+      <View
+        style={{
+          flex: 1,
+          // justifyContent: "center",
+          // marginTop: Constants.statusBarHeight,
+          alignItems: "center",
+          // justifyContent: "space-around",
+        }}
+      >
         <View>
-          <Text>Time:{Time}</Text>
-          <Text>Score:{Score}</Text>
+          <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
+            {"\n"}
+            Score : {Score}
+            {"\n"}
+          </Text>
         </View>
         <View style={styles.row}>
           <TouchableOpacity
@@ -93,7 +103,7 @@ export default function App() {
               CheckAns();
             }}
           >
-            <Text>{First}</Text>
+            <Text style={styles.math}>{First}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.AnsBox}
@@ -102,8 +112,13 @@ export default function App() {
               CheckAns();
             }}
           >
-            <Text>{Second}</Text>
+            <Text style={styles.math}>{Second}</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.rule}>
+          <Text style={{ fontFamily: "kanit", fontSize: 25 }}>
+            {"\n"}Select the highest number on your screen
+          </Text>
         </View>
       </View>
     );
@@ -149,24 +164,25 @@ export default function App() {
       >
         {content}
       </ScrollView>
-      <View style={styles.navbar}>
-        <Text style={{ fontWeight: "bold", fontSize: 25, color: "pink" }}>
-          test
-        </Text>
-      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   AnsBox: {
-    backgroundColor: "yellow",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#fd3a69",
+    // padding: 10,
     borderColor: "black",
-    borderWidth: 1,
-    height: 50,
-    width: 50,
+    borderWidth: 4,
+    height: 140,
+    width: 140,
     justifyContent: "center",
     alignItems: "center",
+    marginLeft: 10,
+    marginTop: 10,
   },
   navbar: {
     alignItems: "center",
@@ -188,10 +204,10 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
-    backgroundColor: "white",
+    backgroundColor: "#E5E7E9",
     marginHorizontal: 5,
     width: "90%",
   },
@@ -200,5 +216,12 @@ const styles = StyleSheet.create({
     // bottom: 50,
     flexDirection: "row",
     // position: "absolute",
+  },
+  math: {
+    fontFamily: "kanit",
+    fontSize: 80,
+  },
+  rule: {
+    padding: 20,
   },
 });

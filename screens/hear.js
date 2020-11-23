@@ -28,11 +28,11 @@ function hear({ navigation }) {
       style={styles.bgimage}
     >
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ width: "80%", height: "60%", marginTop: "10%" }}>
+        <View style={{ width: "90%", height: "90%", marginTop: "10%" }}>
           <Swiper
             style={styles.wrapper}
             showsButtons={true}
-            renderPagination={renderPagination}
+            // renderPagination={renderPagination}
           >
             <View
               style={styles.slide1}
@@ -47,7 +47,7 @@ function hear({ navigation }) {
                 onPress={() => navigation.navigate("Sounds")}
               >
                 <Image
-                  source={require("../assets/cat.jpg")}
+                  source={require("../assets/game/sound.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -87,7 +87,9 @@ AppRegistry.registerComponent("myproject", () => SwiperComponent);
 const styles = StyleSheet.create({
   container: {
     width: 400,
-    height: 400,
+    height: 500,
+    justifyContent: "center",
+    alignItems: "center",
   },
   wrapper: {},
   slide1: {
@@ -108,8 +110,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#92BBD9",
   },
   image: {
-    width: "100%",
+    width: "90%",
     height: "100%",
+    resizeMode: "stretch",
   },
   paginationStyle: {
     left: "90%",

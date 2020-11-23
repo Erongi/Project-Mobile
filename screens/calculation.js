@@ -28,26 +28,19 @@ function calculation({ navigation }) {
       style={styles.bgimage}
     >
       <View style={{ flex: 1, alignItems: "center" }}>
-        <View style={{ width: "80%", height: "60%", marginTop: "10%" }}>
+        <View style={{ width: "90%", height: "90%", marginTop: "10%" }}>
           <Swiper
             style={styles.wrapper}
             showsButtons={true}
-            renderPagination={renderPagination}
+            // renderPagination={renderPagination}
           >
-            <View
-              style={styles.slide1}
-              title={
-                <Text numberOfLines={3}>
-                  Color เกมสำหรับฝึกปฏิกิริยาตอบสนองด้วยสี
-                </Text>
-              }
-            >
+            <View style={styles.slide1}>
               <TouchableOpacity
                 style={styles.container}
                 onPress={() => navigation.navigate("Maths")}
               >
                 <Image
-                  source={require("../assets/cat.jpg")}
+                  source={require("../assets/game/math.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -59,7 +52,7 @@ function calculation({ navigation }) {
                 onPress={() => navigation.navigate("Greater")}
               >
                 <Image
-                  source={require("../assets/dog.jpg")}
+                  source={require("../assets/game/greater.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -71,7 +64,7 @@ function calculation({ navigation }) {
                 onPress={() => navigation.navigate("GreaterP")}
               >
                 <Image
-                  source={require("../assets/fer.jpg")}
+                  source={require("../assets/game/greaterP.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -87,7 +80,9 @@ AppRegistry.registerComponent("myproject", () => SwiperComponent);
 const styles = StyleSheet.create({
   container: {
     width: 400,
-    height: 400,
+    height: 500,
+    justifyContent: "center",
+    alignItems: "center",
   },
   wrapper: {},
   slide1: {
@@ -99,17 +94,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#97CAE5",
+    // backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#92BBD9",
+    // backgroundColor: "#92BBD9",
   },
   image: {
-    width: "100%",
+    width: "90%",
     height: "100%",
+    resizeMode: "stretch",
   },
   paginationStyle: {
     left: "90%",

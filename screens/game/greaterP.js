@@ -98,7 +98,7 @@ export default function App() {
     content = (
       <View>
         <View>
-          <Text>Time:{Time}</Text>
+          {/* <Text>Time:{Time}</Text> */}
           <Text>Score:{Score}</Text>
         </View>
         <View style={styles.row}>
@@ -169,11 +169,6 @@ export default function App() {
       >
         {content}
       </ScrollView>
-      <View style={styles.navbar}>
-        <Text style={{ fontWeight: "bold", fontSize: 25, color: "pink" }}>
-          test
-        </Text>
-      </View>
     </SafeAreaView>
   );
 }
@@ -198,8 +193,6 @@ const styles = StyleSheet.create({
     top: 0,
   },
   proposition: {
-    // top: 150,
-    // flex: 1,
     borderColor: "black",
     borderWidth: 1,
   },
@@ -208,7 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: "white",

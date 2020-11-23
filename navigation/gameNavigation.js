@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -18,6 +25,9 @@ import GreaterP from "../screens/game/greaterP";
 import Sounds from "../screens/game/sound";
 import Maths from "../screens/game/math";
 import Vibration from "../screens/game/vibration";
+import Login from "../screens/authentication/login";
+import Register from "../screens/authentication/register";
+import Scoreboard from "../screens/authentication/scoreboard";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,6 +35,12 @@ const Drawer = createDrawerNavigator();
 const GameNavigator = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Log-in Screen"
+        component={Login}
+        option={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="index"
         component={index}
@@ -35,7 +51,6 @@ const GameNavigator = () => {
             backgroundColor: "Transparent",
           },
           headerTitleStyle: {
-            // alignSelf: "center",
             fontFamily: "kanit",
             fontSize: 26,
           },
@@ -121,8 +136,11 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Color")}
+            >
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -141,8 +159,8 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity onPress={() => navigation.replace("Greater")}>
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -152,7 +170,7 @@ const GameNavigator = () => {
         name="GreaterP"
         component={GreaterP}
         options={({ navigation }) => ({
-          title: "GreaterP",
+          title: "Greater+",
 
           headerStyle: {
             backgroundColor: "Transparent",
@@ -161,8 +179,8 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity onPress={() => navigation.replace("GreaterP")}>
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -172,7 +190,7 @@ const GameNavigator = () => {
         name="Maths"
         component={Maths}
         options={({ navigation }) => ({
-          title: "Maths",
+          title: "Math Sign",
 
           headerStyle: {
             backgroundColor: "Transparent",
@@ -181,8 +199,8 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity onPress={() => navigation.replace("Maths")}>
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -201,8 +219,8 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity onPress={() => navigation.replace("Sounds")}>
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -221,8 +239,28 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate("index")}>
-              <Icon name="list" />
+            <TouchableOpacity onPress={() => navigation.replace("Vibration")}>
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="Scoreboard"
+        component={Scoreboard}
+        options={({ navigation }) => ({
+          title: "Scoreboard",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            alignSelf: "center",
+          },
+          headerRight: () => (
+            <TouchableOpacity onPress={() => navigation.replace("Scoreboard")}>
+              <Icon name="refresh" />
             </TouchableOpacity>
           ),
         })}
@@ -234,7 +272,11 @@ const GameNavigator = () => {
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="test" component={GameNavigator} />
+      {/* <Drawer.Screen name="test" component={Test} /> */}
+      <Drawer.Screen name="Home" component={GameNavigator} />
+      <Drawer.Screen name="testa" component={Login} />
+      <Drawer.Screen name="Register" component={Register} />
+      <Drawer.Screen name="Score Board" component={Scoreboard} />
     </Drawer.Navigator>
   );
 };

@@ -18,7 +18,7 @@ export default function App() {
   const [count, setCount] = useState(0);
   const [GameText, setGameText] = useState("Press black box.");
   const [TextTime, setTextTime] = useState(0);
-  const [magic, setMagic] = useState("white");
+  const [magic, setMagic] = useState("#E5E7E9");
 
   const startTheGame = async () => {
     setMagic("black");
@@ -55,8 +55,8 @@ export default function App() {
           style={styles.GameContainer}
           onPress={() => {
             if (timeStart === 0 && count > 0 && count < 6) {
-              setGameText("Are you prefiring???");
-              setPenalty((x) => x + 1);
+              setGameText("Are you prefiring???(Penalty +1s)");
+              setPenalty((x) => x + 1000);
               return;
             }
             if (count === 0) {
@@ -79,7 +79,15 @@ export default function App() {
           }}
         ></TouchableOpacity>
 
-        <Text style={{ color: "black", fontSize: 35, fontWeight: "bold" }}>
+        <Text
+          style={{
+            alignSelf: "center",
+            fontSize: 30,
+            color: "black",
+            margin: 20,
+          }}
+        >
+          {"\n"}
           {GameText}
         </Text>
       </ScrollView>
@@ -114,7 +122,7 @@ const styles = StyleSheet.create({
     // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
-    backgroundColor: "white",
+    backgroundColor: "#E5E7E9",
     marginHorizontal: 5,
     width: "90%",
   },

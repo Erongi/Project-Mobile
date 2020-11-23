@@ -11,6 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import firebase from "firebase";
+import Modal from "react-native-modal";
 import { Icon } from "react-native-elements";
 export default function App({ navigation }) {
   var colorArray = [
@@ -74,16 +75,24 @@ export default function App({ navigation }) {
   const [TextTime, setTextTime] = useState(0);
   const [timeStart, settimeStart] = useState(0);
   const [magic, setMagic] = useState("#E5E7E9");
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const user = firebase.auth().currentUser.email;
 
-  const addScore = async () => {
-    await firebase.firestore().collection("score").add({
-      email: user,
-      point: final,
-      gameName: "Color",
-    });
-    navigation.replace("Color");
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const addScore = async (score) => {
+    if (count >= 5) {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: score,
+        gameName: "Color",
+      });
+    }
+    toggleModal();
+    // navigation.replace("Color");
   };
 
   const startTheGame = async () => {
@@ -104,7 +113,8 @@ export default function App({ navigation }) {
     console.log("time : ", time);
     settimeStart(0);
   };
-  const final = ((TextTime + Penalty) / count).toFixed(2);
+
+  var final = ((TextTime + Penalty) / count).toFixed(2);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -148,23 +158,9 @@ export default function App({ navigation }) {
               return;
             }
             if (count === 5) {
-              setCount((x) => x + 1);
               stopTheGame();
-              setGameText("End");
-              setCount(6);
-              addScore();
-              return;
-            }
-            if (count === 6) {
-              setStart(
-                <TouchableOpacity
-                  style={{ marginRight: 20 }}
-                  onPress={() => addScore()}
-                >
-                  <Icon name="refresh" />
-                </TouchableOpacity>
-              );
-              return;
+              setStart("End");
+              toggleModal();
             }
           }}
         >
@@ -191,6 +187,18 @@ export default function App({ navigation }) {
           {"\n"}
           {GameText}
         </Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              CONFIRM LOGIN
+            </Text>
+            <Text>
+              Are you sure to login with this E-mail and this password?
+            </Text>
+
+            <Button title="aa" onPress={() => addScore(final)} />
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );
@@ -224,5 +232,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "absolute",
     justifyContent: "flex-end",
+  },
+  loginbt: {
+    // flex: 1,
+    backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
   },
 });

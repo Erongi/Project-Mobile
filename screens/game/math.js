@@ -11,9 +11,10 @@ import {
   SafeAreaView,
   CheckBox,
 } from "react-native";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import Modal from "react-native-modal";
+import firebase from "firebase";
 
-export default function App() {
+export default function App({navigation}) {
   const [Page, setPage] = useState(0);
   const mathsignarray = ["+", "-", "*", "/"];
   const [First, setFirst] = useState(0);
@@ -25,6 +26,39 @@ export default function App() {
   const [Time, setTime] = useState(0);
   const [Score, setScore] = useState(0);
   const [Penalty, setPenalty] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const user = firebase.auth().currentUser.email;
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    CheckAns();
+  }, [Ans]);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+
+
+  const addScore = async () => {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: (Time / 5).toFixed(2),
+        gameName: "Math Sign",
+      });
+    // toggleModal();
+    navigation.navigate("Calculation");
+  };
+
+  const addScoreAndRetry = async () => {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: (Time / 5).toFixed(2),
+        gameName: "Math Sign",
+      });
+    navigation.replace("Maths");
+  };
 
   const RandomProposition = async () => {
     const random = Math.floor(Math.random() * 4);
@@ -34,16 +68,16 @@ export default function App() {
     setRealAns(random);
   };
 
-  const CheckAns = (x) => {
+  const CheckAns = () => {
     const NewScore = Score + 1;
     const NewPenalty = Penalty + 1;
     const time = Math.abs(performance.now() - TimeStart);
-    setAns(x);
     if (Ans === RealAns) {
       setScore(NewScore);
       if (Score === 4) {
         setTime(time);
-        setPage(2);
+        setPage(2)
+        toggleModal();
       }
       RandomProposition();
     } else {
@@ -113,18 +147,16 @@ export default function App() {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPressIn={() => {
-                CheckAns(0);
-                console.log("0");
+              onPress={() => {
+                setAns(0);
               }}
             >
               <Text style={styles.mathsign}>+</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPressIn={() => {
-                CheckAns(1);
-                console.log("1");
+              onPress={() => {
+                setAns(1);
               }}
             >
               <Text style={styles.mathsign}>-</Text>
@@ -133,24 +165,23 @@ export default function App() {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPressIn={() => {
-                CheckAns(2);
-                console.log("2");
+              onPress={() => {
+                setAns(2);
               }}
             >
               <Text style={styles.mathsign}>x</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPressIn={() => {
-                CheckAns(3);
-                console.log("3");
+              onPress={() => {
+                setAns(3);
               }}
             >
               <Text style={styles.mathsign}>÷</Text>
             </TouchableOpacity>
           </View>
         </View>
+        
       </View>
     );
   }
@@ -172,18 +203,49 @@ export default function App() {
         >
           Avg Time : {(Time / 5).toFixed(2)} ms
         </Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              End Game
+            </Text>
+            <Text>Score: {(Time / 5).toFixed(2)} ms</Text>
+
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore()}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry()}
+              >
+                <Text>CANCEL</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
 
+
+
   return (
-    // <SafeAreaView style={styles.container}>
-    // <View style={styles.container}>
-    // <ScrollView keyboardShouldPersistTaps={"handled"}>
-    <View style={styles.container}>{content}</View>
-    // </ScrollView>
-    // </View>
-    // </SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {content}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -221,12 +283,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: "black",
+    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
     // marginTop: Constants.statusBarHeight,
   },
-
+  scrollView: {
+    backgroundColor: "#E5E7E9",
+    marginHorizontal: 5,
+    width: "90%",
+  },
   row: {
     // flex: 1,
     // bottom: 50,
@@ -237,5 +303,45 @@ const styles = StyleSheet.create({
   mathsign: {
     fontFamily: "kanit",
     fontSize: 80,
+  },loginbt: {
+    // flex: 1,
+    backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
+  },
+  button: {
+    // backgroundColor: "#0059ff",
+    // fontSize: 20,
+    // marginBottom: 100,
+    // alignItems: "center",
+    // justifyContent: "center",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  rows: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

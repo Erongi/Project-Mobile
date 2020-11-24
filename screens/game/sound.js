@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
+import firebase from "firebase";
+import Modal from "react-native-modal";
 import {
   Button,
   StyleSheet,
@@ -11,7 +13,7 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 
-export default function App(props) {
+export default function App({ navigation }) {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const [Start, setStart] = useState("Press here.");
   const [Penalty, setPenalty] = useState(0);
@@ -20,7 +22,36 @@ export default function App(props) {
   const [TextTime, setTextTime] = useState(0);
   const [timeStart, settimeStart] = useState(0);
   const [magic, setMagic] = useState("#E5E7E9");
+  const [isModalVisible, setModalVisible] = useState(false);
   // const [index, setIndex] = useState(0);
+  const user = firebase.auth().currentUser.email;
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const addScore = async (score) => {
+    if (count >= 5) {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: score,
+        gameName: "Sound",
+      });
+    }
+    // toggleModal();
+    navigation.navigate("Vision");
+  };
+  const addScoreAndRetry = async (score) => {
+    if (count >= 5) {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: score,
+        gameName: "Sound",
+      });
+    }
+    // toggleModal();
+    navigation.replace("Sounds");
+  };
 
   useEffect(() => {
     this.sound = new Audio.Sound();
@@ -56,7 +87,7 @@ export default function App(props) {
     console.log("time : ", time);
     settimeStart(0);
   };
-
+  var final = ((TextTime + Penalty) / count).toFixed(2);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -68,7 +99,7 @@ export default function App(props) {
         }}
       >
         <Text style={{ fontSize: 30, fontWeight: "bold", color: magic }}>
-          Avg Time: {((TextTime + Penalty) / count).toFixed(2)} ms{"\n"}
+          Avg Time: {final} ms{"\n"}
         </Text>
         <TouchableOpacity
           activeOpacity={1}
@@ -95,6 +126,7 @@ export default function App(props) {
               stopTheGame();
               setGameText("");
               setStart("END");
+              toggleModal();
               return;
             }
           }}
@@ -121,6 +153,30 @@ export default function App(props) {
           {"\n"}
           {GameText}
         </Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              End Game
+            </Text>
+            <Text>Score: {final}</Text>
+
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore(final)}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry(final)}
+              >
+                <Text>RETRY</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );
@@ -163,5 +219,34 @@ const styles = StyleSheet.create({
     height: "45%",
     borderColor: "black",
     borderWidth: 4,
+  },
+  loginbt: {
+    backgroundColor: "white",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
+  },
+  row: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  button: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
   },
 });

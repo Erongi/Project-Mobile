@@ -11,8 +11,10 @@ import {
   SafeAreaView,
   CheckBox,
 } from "react-native";
+import Modal from "react-native-modal";
+import firebase from "firebase";
 
-export default function App() {
+export default function App({navigation}) {
   const [Page, setPage] = useState(0);
   const mathsignarray = ["+", "-", "*", "/"];
   const [First1, setFirst1] = useState(0);
@@ -31,6 +33,40 @@ export default function App() {
   const [Time, setTime] = useState(0);
   const [Score, setScore] = useState(0);
   const [Penalty, setPenalty] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const user = firebase.auth().currentUser.email;
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    CheckAns();
+  }, [Ans]);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+
+
+  const addScore = async () => {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: (Time / 5).toFixed(2),
+        gameName: "Greater+",
+      });
+    // toggleModal();
+    navigation.navigate("Calculation");
+  };
+
+  const addScoreAndRetry = async () => {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: (Time /5).toFixed(2),
+        gameName: "Greater+",
+      });
+    navigation.replace("GreaterP");
+  };
+
 
   const RandomProposition = async () => {
     const random1 = Math.floor(Math.random() * 4);
@@ -58,7 +94,8 @@ export default function App() {
       setScore(NewScore);
       if (Score === 4) {
         setTime(time);
-        setPage(2);
+        setPage(2)
+        toggleModal();
       }
       RandomProposition();
     } else {
@@ -117,7 +154,6 @@ export default function App() {
             style={styles.AnsBox}
             onPress={() => {
               setAns(Result1);
-              CheckAns();
             }}
           >
             <Text style={styles.math}>
@@ -128,7 +164,6 @@ export default function App() {
             style={styles.AnsBox}
             onPress={() => {
               setAns(Result2);
-              CheckAns();
             }}
           >
             <Text style={styles.math}>
@@ -141,6 +176,7 @@ export default function App() {
             {"\n"}Select the highest value of proposition on your screen.
           </Text>
         </View>
+        
       </View>
     );
   }
@@ -169,9 +205,35 @@ export default function App() {
         >
           Avg Time : {(Time / 5).toFixed(2)} ms
         </Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              End Game
+            </Text>
+            <Text>Score: {(Time /  5).toFixed(2)} ms</Text>
+
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore()}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry()}
+              >
+                <Text>CANCEL</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
+
+ 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -243,5 +305,46 @@ const styles = StyleSheet.create({
   },
   rule: {
     padding: 20,
+  },
+  loginbt: {
+    // flex: 1,
+    backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
+  },
+  button: {
+    // backgroundColor: "#0059ff",
+    // fontSize: 20,
+    // marginBottom: 100,
+    // alignItems: "center",
+    // justifyContent: "center",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  rows: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

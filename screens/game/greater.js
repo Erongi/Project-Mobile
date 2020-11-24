@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import firebase from "firebase";
-export default function App({ navigation }) {
+export default function App( {navigation}) {
   const [Page, setPage] = useState(0);
   const colorarray = ["red", "green", "blue"];
   const [First, setFirst] = useState(0);
@@ -49,11 +49,10 @@ export default function App({ navigation }) {
     setModalVisible(!isModalVisible);
   };
 
+
+
   const addScore = async () => {
-    await firebase
-      .firestore()
-      .collection("score")
-      .add({
+      await firebase.firestore().collection("score").add({
         email: user,
         point: (Time / 10).toFixed(2),
         gameName: "Greater",
@@ -63,16 +62,15 @@ export default function App({ navigation }) {
   };
 
   const addScoreAndRetry = async () => {
-    await firebase
-      .firestore()
-      .collection("score")
-      .add({
+      await firebase.firestore().collection("score").add({
         email: user,
         point: (Time / 10).toFixed(2),
         gameName: "Greater",
       });
     navigation.replace("Greater");
   };
+
+
 
   const CheckAns = () => {
     const NewScore = Score + 1;
@@ -83,6 +81,7 @@ export default function App({ navigation }) {
       setScore(NewScore);
       if (Score === 9) {
         setTime(time);
+        setPage(2)
         toggleModal();
       }
       RandomProposition();
@@ -130,7 +129,7 @@ export default function App({ navigation }) {
         <View>
           <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
             {"\n"}
-            Score : {Score - 1}
+            Score : {Score -1}
             {"\n"}
           </Text>
         </View>
@@ -159,6 +158,34 @@ export default function App({ navigation }) {
             {"\n"}Select the highest number on your screen
           </Text>
         </View>
+      </View>
+    );
+  }
+
+  if (Page === 2) {
+    content = (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
+        >
+          END{" "}
+        </Text>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
+        >
+          Avg Time : {(Time / 10).toFixed(2)} ms
+        </Text>
         <Modal isVisible={isModalVisible}>
           <View style={styles.loginbt}>
             <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
@@ -166,7 +193,7 @@ export default function App({ navigation }) {
             </Text>
             <Text>Score: {(Time / 10).toFixed(2)} ms</Text>
 
-            <View style={styles.row}>
+            <View style={styles.rows}>
               <TouchableOpacity
                 style={styles.primary}
                 onPress={() => addScore()}
@@ -186,6 +213,7 @@ export default function App({ navigation }) {
       </View>
     );
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -293,7 +321,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2288dd",
     padding: 10,
   },
-  row: {
+  rows: {
     // flex: 1,
     // height: "100%",
     width: "100%",

@@ -10,8 +10,10 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
+import Modal from "react-native-modal";
+import firebase from "firebase";
 
-export default function App() {
+export default function App({ navigation }) {
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const [Start, setStart] = useState("Press here.");
   const [timeStart, settimeStart] = useState(0);
@@ -20,6 +22,38 @@ export default function App() {
   const [GameText, setGameText] = useState("Press black box.");
   const [TextTime, setTextTime] = useState(0);
   const [magic, setMagic] = useState("#E5E7E9");
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const user = firebase.auth().currentUser.email;
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const addScore = async () => {
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
+        email: user,
+        point: ((TextTime + Penalty) / count).toFixed(2),
+        gameName: "Vibration",
+      });
+    // toggleModal();
+    navigation.navigate("Sense");
+  };
+
+  const addScoreAndRetry = async () => {
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
+        email: user,
+        point: ((TextTime + Penalty) / count).toFixed(2),
+        gameName: "Vibration",
+      });
+    navigation.replace("Vibration");
+  };
 
   const startTheGame = async () => {
     setStart("");
@@ -77,6 +111,7 @@ export default function App() {
               stopTheGame();
               setGameText("");
               setStart("END");
+              toggleModal()
               return;
             }
           }}
@@ -104,6 +139,30 @@ export default function App() {
           {"\n"}
           {GameText}
         </Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              End Game
+            </Text>
+            <Text>Score: {((TextTime + Penalty) / count).toFixed(2)}</Text>
+
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore()}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry()}
+              >
+                <Text>CANCEL</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </ScrollView>
     </SafeAreaView>
   );
@@ -146,5 +205,45 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "absolute",
     justifyContent: "flex-end",
+  },loginbt: {
+    // flex: 1,
+    backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
+  },
+  button: {
+    // backgroundColor: "#0059ff",
+    // fontSize: 20,
+    // marginBottom: 100,
+    // alignItems: "center",
+    // justifyContent: "center",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  rows: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

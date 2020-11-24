@@ -15,11 +15,10 @@ import Modal from "react-native-modal";
 import firebase from "firebase";
 
 export default function App({ navigation }) {
+  var colorArray = ["RED", "GREEN", "BLUE", "YELLOW"];
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+  const [Color, setColor] = useState("");
   const [Page, setPage] = useState(0);
-  const mathsignarray = ["+", "-", "*", "/"];
-  const [First, setFirst] = useState(0);
-  const [Second, setSecond] = useState(0);
-  const [Signarray, setSignarray] = useState("");
   const [Ans, setAns] = useState(0);
   const [RealAns, setRealAns] = useState(0);
   const [TimeStart, setTimeStart] = useState(0);
@@ -35,6 +34,12 @@ export default function App({ navigation }) {
     CheckAns();
   }, [Ans]);
 
+  const RandomProposition = () => {
+    const randomT = Math.floor(Math.random() * 4);
+    setColor(colorArray[randomT]);
+    setRealAns(randomT);
+  };
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -45,11 +50,11 @@ export default function App({ navigation }) {
       .collection("score")
       .add({
         email: user,
-        point: (Time / 5).toFixed(2),
-        gameName: "Math Sign",
+        point: (Time / 10).toFixed(2),
+        gameName: "colorT",
       });
     // toggleModal();
-    navigation.navigate("Calculation");
+    navigation.navigate("Vision");
   };
 
   const addScoreAndRetry = async () => {
@@ -58,27 +63,20 @@ export default function App({ navigation }) {
       .collection("score")
       .add({
         email: user,
-        point: (Time / 5).toFixed(2),
-        gameName: "Math Sign",
+        point: (Time / 10).toFixed(2),
+        gameName: "colorT",
       });
-    navigation.replace("Maths");
-  };
-
-  const RandomProposition = async () => {
-    const random = Math.floor(Math.random() * 4);
-    setFirst(Math.floor(Math.random() * 50) + 1);
-    setSecond(Math.floor(Math.random() * 50) + 1);
-    setSignarray(mathsignarray[random]);
-    setRealAns(random);
+    navigation.replace("ColorT");
   };
 
   const CheckAns = () => {
     const NewScore = Score + 1;
     const NewPenalty = Penalty + 1;
     const time = Math.abs(performance.now() - TimeStart);
+
     if (Ans === RealAns) {
       setScore(NewScore);
-      if (Score === 4) {
+      if (Score === 10) {
         setTime(time);
         setPage(2);
         toggleModal();
@@ -116,82 +114,116 @@ export default function App({ navigation }) {
   );
 
   if (Page === 1) {
-    const Result = eval(First + Signarray + Second);
     content = (
       <View
         style={{
           flex: 1,
-          justifyContent: "center",
+          // justifyContent: "center",
+          // marginTop: Constants.statusBarHeight,
           alignItems: "center",
-          justifyContent: "space-around",
+          // justifyContent: "space-around",
         }}
       >
         <View>
-          <Text style={{ fontFamily: "kanit", fontSize: 35 }}>
+          <Text style={{ fontFamily: "kanit", fontSize: 40 }}>
             {"\n"}
-            Score:{Score}
+            Score : {Score - 1}
             {"\n"}
+            SELECT : {Color}
           </Text>
         </View>
-        <View style={styles.proposition}>
-          <Text
-            style={{ fontFamily: "kanit", fontSize: 40, fontWeight: "bold" }}
-          >
-            {First} 🔲 {Second} = {Result.toFixed(2)} {"\n"}
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-
-            // width: "100%",
-            // borderColor: "black",
-            // borderWidth: 1,
-          }}
-        >
+        <View>
           <View style={styles.row}>
             <TouchableOpacity
-              style={styles.AnsBox}
+              style={{
+                borderRadius: 10,
+                alignItems: "center",
+                backgroundColor: "#FF1A66",
+                borderColor: "black",
+                borderWidth: 4,
+                height: 140,
+                width: 140,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 10,
+                marginTop: 10,
+              }}
               onPress={() => {
                 setAns(0);
+                CheckAns();
               }}
-            >
-              <Text style={styles.mathsign}>+</Text>
-            </TouchableOpacity>
+            ></TouchableOpacity>
             <TouchableOpacity
-              style={styles.AnsBox}
+              style={{
+                borderRadius: 10,
+                alignItems: "center",
+                backgroundColor: "#00E680",
+                borderColor: "black",
+                borderWidth: 4,
+                height: 140,
+                width: 140,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 10,
+                marginTop: 10,
+              }}
               onPress={() => {
                 setAns(1);
+                CheckAns();
               }}
-            >
-              <Text style={styles.mathsign}>-</Text>
-            </TouchableOpacity>
+            ></TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity
-              style={styles.AnsBox}
+              style={{
+                borderRadius: 10,
+                alignItems: "center",
+                backgroundColor: "#4D80CC",
+                borderColor: "black",
+                borderWidth: 4,
+                height: 140,
+                width: 140,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 10,
+                marginTop: 10,
+              }}
               onPress={() => {
                 setAns(2);
+                CheckAns();
               }}
-            >
-              <Text style={styles.mathsign}>x</Text>
-            </TouchableOpacity>
+            ></TouchableOpacity>
             <TouchableOpacity
-              style={styles.AnsBox}
+              style={{
+                borderRadius: 10,
+                alignItems: "center",
+                backgroundColor: "#FFFF99",
+                borderColor: "black",
+                borderWidth: 4,
+                height: 140,
+                width: 140,
+                justifyContent: "center",
+                alignItems: "center",
+                marginLeft: 10,
+                marginTop: 10,
+              }}
               onPress={() => {
                 setAns(3);
+                CheckAns();
               }}
-            >
-              <Text style={styles.mathsign}>÷</Text>
-            </TouchableOpacity>
+            ></TouchableOpacity>
           </View>
+        </View>
+        <View style={styles.rule}>
+          <Text style={{ fontFamily: "kanit", fontSize: 25 }}>
+            {"\n"}Select the button same color
+          </Text>
         </View>
       </View>
     );
   }
 
   if (Page === 2) {
-    const Result = eval(First + Signarray + Second);
     content = (
       <View
         style={{
@@ -205,16 +237,24 @@ export default function App({ navigation }) {
             fontWeight: "bold",
           }}
         >
-          Avg Time : {(Time / 5).toFixed(2)} ms
+          END{" "}
+        </Text>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+          }}
+        >
+          Avg Time : {(Time / 10).toFixed(2)} ms
         </Text>
         <Modal isVisible={isModalVisible}>
           <View style={styles.loginbt}>
             <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
               End Game
             </Text>
-            <Text>Score: {(Time / 5).toFixed(2)} ms</Text>
+            <Text>Score: {(Time / 10).toFixed(2)} ms</Text>
 
-            <View style={styles.row}>
+            <View style={styles.rows}>
               <TouchableOpacity
                 style={styles.primary}
                 onPress={() => addScore()}
@@ -254,12 +294,10 @@ export default function App({ navigation }) {
 const styles = StyleSheet.create({
   AnsBox: {
     borderRadius: 10,
-    fontFamily: "kanit",
     alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    // padding: 10,
+    backgroundColor: "#fd3a69",
     borderColor: "black",
-    borderWidth: 1,
+    borderWidth: 4,
     height: 140,
     width: 140,
     justifyContent: "center",
@@ -276,12 +314,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
   },
-
   proposition: {
     // top: 150,
     // flex: 1,
-    // borderColor: "black",
-    // borderWidth: 1,
+    borderColor: "black",
+    borderWidth: 1,
   },
   container: {
     flex: 1,
@@ -299,12 +336,14 @@ const styles = StyleSheet.create({
     // flex: 1,
     // bottom: 50,
     flexDirection: "row",
-    justifyContent: "space-around",
     // position: "absolute",
   },
-  mathsign: {
+  math: {
     fontFamily: "kanit",
     fontSize: 80,
+  },
+  rule: {
+    padding: 20,
   },
   loginbt: {
     // flex: 1,
@@ -346,5 +385,18 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  animalcon: {
+    borderRadius: 10,
+    alignItems: "center",
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 4,
+    height: 140,
+    width: 140,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    marginTop: 10,
   },
 });

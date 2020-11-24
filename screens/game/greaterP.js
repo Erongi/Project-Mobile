@@ -14,7 +14,7 @@ import {
 import Modal from "react-native-modal";
 import firebase from "firebase";
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
   const [Page, setPage] = useState(0);
   const mathsignarray = ["+", "-", "*", "/"];
   const [First1, setFirst1] = useState(0);
@@ -46,10 +46,11 @@ export default function App({navigation}) {
     setModalVisible(!isModalVisible);
   };
 
-
-
   const addScore = async () => {
-      await firebase.firestore().collection("score").add({
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
         email: user,
         point: (Time / 5).toFixed(2),
         gameName: "Greater+",
@@ -59,14 +60,16 @@ export default function App({navigation}) {
   };
 
   const addScoreAndRetry = async () => {
-      await firebase.firestore().collection("score").add({
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
         email: user,
-        point: (Time /5).toFixed(2),
+        point: (Time / 5).toFixed(2),
         gameName: "Greater+",
       });
     navigation.replace("GreaterP");
   };
-
 
   const RandomProposition = async () => {
     const random1 = Math.floor(Math.random() * 4);
@@ -92,9 +95,9 @@ export default function App({navigation}) {
     const time = Math.abs(performance.now() - TimeStart);
     if (Ans === RealAns) {
       setScore(NewScore);
-      if (Score === 4) {
+      if (Score === 5) {
         setTime(time);
-        setPage(2)
+        setPage(2);
         toggleModal();
       }
       RandomProposition();
@@ -114,6 +117,7 @@ export default function App({navigation}) {
         height: "45%",
         borderColor: "black",
         borderWidth: 4,
+        borderRadius: 15,
       }}
       onPress={() => {
         setPage(1);
@@ -176,7 +180,6 @@ export default function App({navigation}) {
             {"\n"}Select the highest value of proposition on your screen.
           </Text>
         </View>
-        
       </View>
     );
   }
@@ -210,7 +213,7 @@ export default function App({navigation}) {
             <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
               End Game
             </Text>
-            <Text>Score: {(Time /  5).toFixed(2)} ms</Text>
+            <Text>Score: {(Time / 5).toFixed(2)} ms</Text>
 
             <View style={styles.row}>
               <TouchableOpacity
@@ -224,7 +227,7 @@ export default function App({navigation}) {
                 style={styles.button}
                 onPress={() => addScoreAndRetry()}
               >
-                <Text>CANCEL</Text>
+                <Text>RETRY</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -232,8 +235,6 @@ export default function App({navigation}) {
       </View>
     );
   }
-
- 
 
   return (
     <SafeAreaView style={styles.container}>

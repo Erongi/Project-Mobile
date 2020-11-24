@@ -25,6 +25,7 @@ import hear from "../screens/hear";
 import calculation from "../screens/calculation";
 
 import Color from "../screens/game/color";
+import ColorT from "../screens/game/colorT";
 import Greater from "../screens/game/greater";
 import GreaterP from "../screens/game/greaterP";
 import Sounds from "../screens/game/sound";
@@ -33,6 +34,9 @@ import Vibration from "../screens/game/vibration";
 import Login from "../screens/authentication/login";
 import Register from "../screens/authentication/register";
 import Scoreboard from "../screens/authentication/scoreboard";
+import Green from "../screens/game/green";
+import Dog from "../screens/game/dog";
+import Dog4 from "../screens/game/dog4";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -210,6 +214,98 @@ const GameNavigator = () => {
             <TouchableOpacity
               style={{ marginRight: 20 }}
               onPress={() => navigation.replace("Color")}
+            >
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="ColorT"
+        component={ColorT}
+        options={({ navigation }) => ({
+          title: "TRUE COLOR",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            alignSelf: "center",
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("ColorT")}
+            >
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="Green"
+        component={Green}
+        options={({ navigation }) => ({
+          title: "Green",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            alignSelf: "center",
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Green")}
+            >
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="Dog"
+        component={Dog}
+        options={({ navigation }) => ({
+          title: "Dog & Cat",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            alignSelf: "center",
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Dog")}
+            >
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+
+      <Stack.Screen
+        name="Dog4"
+        component={Dog4}
+        options={({ navigation }) => ({
+          title: "Dog & Cat & Elephant & Bird",
+
+          headerStyle: {
+            backgroundColor: "Transparent",
+          },
+          headerTitleStyle: {
+            alignSelf: "center",
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Dog4")}
             >
               <Icon name="refresh" />
             </TouchableOpacity>

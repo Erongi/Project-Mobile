@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import firebase from "firebase";
-export default function App( {navigation}) {
+export default function App({ navigation }) {
   const [Page, setPage] = useState(0);
   const colorarray = ["red", "green", "blue"];
   const [First, setFirst] = useState(0);
@@ -49,10 +49,11 @@ export default function App( {navigation}) {
     setModalVisible(!isModalVisible);
   };
 
-
-
   const addScore = async () => {
-      await firebase.firestore().collection("score").add({
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
         email: user,
         point: (Time / 10).toFixed(2),
         gameName: "Greater",
@@ -62,15 +63,16 @@ export default function App( {navigation}) {
   };
 
   const addScoreAndRetry = async () => {
-      await firebase.firestore().collection("score").add({
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
         email: user,
         point: (Time / 10).toFixed(2),
         gameName: "Greater",
       });
     navigation.replace("Greater");
   };
-
-
 
   const CheckAns = () => {
     const NewScore = Score + 1;
@@ -79,9 +81,9 @@ export default function App( {navigation}) {
     console.log(Ans);
     if (Ans === RealAns) {
       setScore(NewScore);
-      if (Score === 9) {
+      if (Score === 10) {
         setTime(time);
-        setPage(2)
+        setPage(2);
         toggleModal();
       }
       RandomProposition();
@@ -101,6 +103,7 @@ export default function App( {navigation}) {
         height: "45%",
         borderColor: "black",
         borderWidth: 4,
+        borderRadius: 15,
       }}
       onPress={() => {
         setPage(1);
@@ -129,7 +132,7 @@ export default function App( {navigation}) {
         <View>
           <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
             {"\n"}
-            Score : {Score -1}
+            Score : {Score - 1}
             {"\n"}
           </Text>
         </View>
@@ -205,7 +208,7 @@ export default function App( {navigation}) {
                 style={styles.button}
                 onPress={() => addScoreAndRetry()}
               >
-                <Text>CANCEL</Text>
+                <Text>RETRY</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -213,7 +216,6 @@ export default function App( {navigation}) {
       </View>
     );
   }
-
 
   return (
     <SafeAreaView style={styles.container}>

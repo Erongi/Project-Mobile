@@ -73,6 +73,7 @@ export default function Scoreboard(hello) {
           <Picker.Item label="Math" value="Math" />
           <Picker.Item label="Sound" value="Sound" />
           <Picker.Item label="Vibration" value="Vibration" />
+          <Picker.Item label="True Color" value="colorT" />
         </Picker>
         <View
           style={{

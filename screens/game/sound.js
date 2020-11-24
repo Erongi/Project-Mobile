@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
-import firebase from "firebase";
-import Modal from "react-native-modal";
 import {
   Button,
   StyleSheet,
@@ -11,6 +9,9 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
+
+import Modal from "react-native-modal";
+import firebase from "firebase";
 import { Audio } from "expo-av";
 
 export default function App({ navigation }) {
@@ -22,52 +23,56 @@ export default function App({ navigation }) {
   const [TextTime, setTextTime] = useState(0);
   const [timeStart, settimeStart] = useState(0);
   const [magic, setMagic] = useState("#E5E7E9");
+  const [index, setIndex] = useState(0);
+
   const [isModalVisible, setModalVisible] = useState(false);
-  // const [index, setIndex] = useState(0);
+
+  const soundObject = new Audio.Sound();
+  soundObject.loadAsync(require("../../assets/scream.mp3"));
+
   const user = firebase.auth().currentUser.email;
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const addScore = async (score) => {
+  const addScore = async () => {
     if (count >= 5) {
-      await firebase.firestore().collection("score").add({
-        email: user,
-        point: score,
-        gameName: "Sound",
-      });
+      await firebase
+        .firestore()
+        .collection("score")
+        .add({
+          email: user,
+          point: ((TextTime + Penalty) / count).toFixed(2),
+          gameName: "Sound",
+        });
     }
     // toggleModal();
-    navigation.navigate("Vision");
+    navigation.navigate("Hear");
   };
-  const addScoreAndRetry = async (score) => {
+
+  const addScoreAndRetry = async () => {
     if (count >= 5) {
-      await firebase.firestore().collection("score").add({
-        email: user,
-        point: score,
-        gameName: "Sound",
-      });
+      await firebase
+        .firestore()
+        .collection("score")
+        .add({
+          email: user,
+          point: ((TextTime + Penalty) / count).toFixed(2),
+          gameName: "Sound",
+        });
     }
     // toggleModal();
     navigation.replace("Sounds");
   };
 
-  useEffect(() => {
-    this.sound = new Audio.Sound();
-    const status = {
-      shouldPlay: false,
-    };
-    this.sound.loadAsync(require("../../assets/scream.mp3"), status, false);
-  });
-
   function playSound() {
     console.log("play");
-    this.sound.playAsync();
+    soundObject.playAsync();
   }
   function stopSound() {
     console.log("stop");
-    this.sound.stopAsync();
+    soundObject.stopAsync();
   }
 
   const startTheGame = async () => {
@@ -87,7 +92,7 @@ export default function App({ navigation }) {
     console.log("time : ", time);
     settimeStart(0);
   };
-  var final = ((TextTime + Penalty) / count).toFixed(2);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -99,7 +104,7 @@ export default function App({ navigation }) {
         }}
       >
         <Text style={{ fontSize: 30, fontWeight: "bold", color: magic }}>
-          Avg Time: {final} ms{"\n"}
+          Avg Time: {((TextTime + Penalty) / count).toFixed(2)} ms{"\n"}
         </Text>
         <TouchableOpacity
           activeOpacity={1}
@@ -135,7 +140,7 @@ export default function App({ navigation }) {
             style={{
               alignSelf: "center",
               fontSize: 30,
-              color: "red",
+              color: "white",
               margin: 20,
             }}
           >
@@ -158,19 +163,19 @@ export default function App({ navigation }) {
             <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
               End Game
             </Text>
-            <Text>Score: {final}</Text>
+            <Text>Score: {((TextTime + Penalty) / count).toFixed(2)}</Text>
 
             <View style={styles.row}>
               <TouchableOpacity
                 style={styles.primary}
-                onPress={() => addScore(final)}
+                onPress={() => addScore()}
               >
                 <Text style={{ color: "white" }}>CONFIRM</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => addScoreAndRetry(final)}
+                onPress={() => addScoreAndRetry()}
               >
                 <Text>RETRY</Text>
               </TouchableOpacity>
@@ -212,16 +217,22 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   GameContainer: {
-    backgroundColor: "white",
+    backgroundColor: "gray",
     alignItems: "center",
     justifyContent: "center",
     width: "90%",
     height: "45%",
     borderColor: "black",
     borderWidth: 4,
+    borderRadius: 15,
   },
   loginbt: {
+    // flex: 1,
     backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -230,10 +241,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     padding: "4%",
   },
-  row: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
+  button: {
+    // backgroundColor: "#0059ff",
+    // fontSize: 20,
+    // marginBottom: 100,
+    // alignItems: "center",
+    // justifyContent: "center",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
   },
   primary: {
     borderRadius: 10,
@@ -242,11 +260,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#2288dd",
     padding: 10,
   },
-  button: {
-    borderRadius: 10,
-    fontFamily: "kanit",
-    alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    padding: 10,
+  row: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

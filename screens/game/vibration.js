@@ -111,7 +111,7 @@ export default function App({ navigation }) {
               stopTheGame();
               setGameText("");
               setStart("END");
-              toggleModal()
+              toggleModal();
               return;
             }
           }}
@@ -158,7 +158,7 @@ export default function App({ navigation }) {
                 style={styles.button}
                 onPress={() => addScoreAndRetry()}
               >
-                <Text>CANCEL</Text>
+                <Text>RETRY</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
     height: "45%",
     borderColor: "black",
     borderWidth: 4,
+    borderRadius: 15,
   },
   container: {
     flex: 1,
@@ -205,7 +206,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     position: "absolute",
     justifyContent: "flex-end",
-  },loginbt: {
+  },
+  loginbt: {
     // flex: 1,
     backgroundColor: "white",
     // marginTop: "40%",

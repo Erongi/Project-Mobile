@@ -49,7 +49,7 @@ function hear({ navigation }) {
             <View style={styles.slide2}>
               <TouchableOpacity
                 style={styles.container}
-                onPress={() => navigation.navigate("Sounds")}
+                onPress={() => navigation.navigate("Dog")}
               >
                 <Image
                   source={require("../assets/dog.jpg")}
@@ -61,7 +61,7 @@ function hear({ navigation }) {
             <View style={styles.slide3}>
               <TouchableOpacity
                 style={styles.container}
-                onPress={() => navigation.navigate("Sounds")}
+                onPress={() => navigation.navigate("Dog4")}
               >
                 <Image
                   source={require("../assets/fer.jpg")}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#97CAE5",
+    // backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,

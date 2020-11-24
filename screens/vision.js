@@ -49,7 +49,7 @@ function vision({ navigation }) {
             <View style={styles.slide2}>
               <TouchableOpacity
                 style={styles.container}
-                onPress={() => navigation.navigate("Color")}
+                onPress={() => navigation.navigate("Green")}
               >
                 <Image
                   source={require("../assets/dog.jpg")}
@@ -61,7 +61,7 @@ function vision({ navigation }) {
             <View style={styles.slide3}>
               <TouchableOpacity
                 style={styles.container}
-                onPress={() => navigation.navigate("Color")}
+                onPress={() => navigation.navigate("ColorT")}
               >
                 <Image
                   source={require("../assets/fer.jpg")}
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#97CAE5",
+    // backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#92BBD9",
+    // backgroundColor: "#92BBD9",
   },
   image: {
     width: "90%",

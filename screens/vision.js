@@ -52,7 +52,7 @@ function vision({ navigation }) {
                 onPress={() => navigation.navigate("Green")}
               >
                 <Image
-                  source={require("../assets/dog.jpg")}
+                  source={require("../assets/game/green.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -64,7 +64,7 @@ function vision({ navigation }) {
                 onPress={() => navigation.navigate("ColorT")}
               >
                 <Image
-                  source={require("../assets/fer.jpg")}
+                  source={require("../assets/game/colort.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>

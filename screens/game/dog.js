@@ -76,7 +76,7 @@ export default function App({ navigation }) {
       .collection("score")
       .add({
         email: user,
-        point: (Time / 10).toFixed(2),
+        point: (Time / 6).toFixed(2),
         gameName: "Dog",
       });
     // toggleModal();
@@ -89,7 +89,7 @@ export default function App({ navigation }) {
       .collection("score")
       .add({
         email: user,
-        point: (Time / 10).toFixed(2),
+        point: (Time / 6).toFixed(2),
         gameName: "Dog",
       });
     navigation.replace("Dog");
@@ -102,7 +102,7 @@ export default function App({ navigation }) {
 
     if (Ans === RealAns) {
       setScore(NewScore);
-      if (Score === 10) {
+      if (Score === 6) {
         setTime(time);
         setPage(2);
         unloadSound();

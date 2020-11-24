@@ -52,7 +52,7 @@ function hear({ navigation }) {
                 onPress={() => navigation.navigate("Dog")}
               >
                 <Image
-                  source={require("../assets/dog.jpg")}
+                  source={require("../assets/game/dog.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -64,7 +64,7 @@ function hear({ navigation }) {
                 onPress={() => navigation.navigate("Dog4")}
               >
                 <Image
-                  source={require("../assets/fer.jpg")}
+                  source={require("../assets/game/zoo.png")}
                   style={styles.image}
                 />
               </TouchableOpacity>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#92BBD9",
+    // backgroundColor: "#92BBD9",
   },
   image: {
     width: "90%",

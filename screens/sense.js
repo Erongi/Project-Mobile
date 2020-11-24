@@ -45,30 +45,6 @@ function sense({ navigation }) {
                 />
               </TouchableOpacity>
             </View>
-
-            <View style={styles.slide2}>
-              <TouchableOpacity
-                style={styles.container}
-                onPress={() => navigation.navigate("Vibration")}
-              >
-                <Image
-                  source={require("../assets/dog.jpg")}
-                  style={styles.image}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.slide3}>
-              <TouchableOpacity
-                style={styles.container}
-                onPress={() => navigation.navigate("Vibration")}
-              >
-                <Image
-                  source={require("../assets/fer.jpg")}
-                  style={styles.image}
-                />
-              </TouchableOpacity>
-            </View>
           </Swiper>
         </View>
       </View>

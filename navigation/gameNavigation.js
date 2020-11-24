@@ -68,7 +68,7 @@ const ScoreNavigator = () => {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.replace("Scoreboard")}
-              style={{ marginLeft: 20 }}
+              style={{ marginRight: 20 }}
             >
               <Icon name="refresh" />
             </TouchableOpacity>
@@ -156,7 +156,7 @@ const GameNavigator = () => {
       <Stack.Screen
         name="Sense"
         component={sense}
-        options={{
+        options={({ navigation }) => ({
           title: "Touch / Feel",
 
           headerStyle: {
@@ -165,13 +165,21 @@ const GameNavigator = () => {
           headerTitleStyle: {
             alignSelf: "center",
           },
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Scoreboard")}
+              style={{ marginRight: 20 }}
+            >
+              <Icon name="assessment" />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <Stack.Screen
         name="Hear"
         component={hear}
-        options={{
+        options={({ navigation }) => ({
           title: "Hearing",
 
           headerStyle: {
@@ -180,13 +188,21 @@ const GameNavigator = () => {
           headerTitleStyle: {
             alignSelf: "center",
           },
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Scoreboard")}
+              style={{ marginRight: 20 }}
+            >
+              <Icon name="assessment" />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <Stack.Screen
         name="Calculation"
         component={calculation}
-        options={{
+        options={({ navigation }) => ({
           title: "Calculation",
 
           headerStyle: {
@@ -195,7 +211,15 @@ const GameNavigator = () => {
           headerTitleStyle: {
             alignSelf: "center",
           },
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Scoreboard")}
+              style={{ marginRight: 20 }}
+            >
+              <Icon name="assessment" />
+            </TouchableOpacity>
+          ),
+        })}
       />
 
       <Stack.Screen
@@ -326,7 +350,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("Greater")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Greater")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),
@@ -346,7 +373,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("GreaterP")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("GreaterP")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),
@@ -366,7 +396,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("Maths")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Maths")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),
@@ -386,7 +419,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("Sounds")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Sounds")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),
@@ -406,7 +442,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("Vibration")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Vibration")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),
@@ -426,7 +465,10 @@ const GameNavigator = () => {
             alignSelf: "center",
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.replace("Scoreboard")}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.replace("Scoreboard")}
+            >
               <Icon name="refresh" />
             </TouchableOpacity>
           ),

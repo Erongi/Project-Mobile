@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   CheckBox,
 } from "react-native";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 export default function App() {
   const [Page, setPage] = useState(0);
@@ -33,10 +34,11 @@ export default function App() {
     setRealAns(random);
   };
 
-  const CheckAns = () => {
+  const CheckAns = (x) => {
     const NewScore = Score + 1;
     const NewPenalty = Penalty + 1;
     const time = Math.abs(performance.now() - TimeStart);
+    setAns(x);
     if (Ans === RealAns) {
       setScore(NewScore);
       if (Score === 4) {
@@ -111,18 +113,18 @@ export default function App() {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPress={() => {
-                setAns(0);
-                CheckAns();
+              onPressIn={() => {
+                CheckAns(0);
+                console.log("0");
               }}
             >
               <Text style={styles.mathsign}>+</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPress={() => {
-                setAns(1);
-                CheckAns();
+              onPressIn={() => {
+                CheckAns(1);
+                console.log("1");
               }}
             >
               <Text style={styles.mathsign}>-</Text>
@@ -131,18 +133,18 @@ export default function App() {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPress={() => {
-                setAns(2);
-                CheckAns();
+              onPressIn={() => {
+                CheckAns(2);
+                console.log("2");
               }}
             >
               <Text style={styles.mathsign}>x</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.AnsBox}
-              onPress={() => {
-                setAns(3);
-                CheckAns();
+              onPressIn={() => {
+                CheckAns(3);
+                console.log("3");
               }}
             >
               <Text style={styles.mathsign}>÷</Text>
@@ -175,18 +177,13 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {content}
-      </ScrollView>
-    </SafeAreaView>
+    // <SafeAreaView style={styles.container}>
+    // <View style={styles.container}>
+    // <ScrollView keyboardShouldPersistTaps={"handled"}>
+    <View style={styles.container}>{content}</View>
+    // </ScrollView>
+    // </View>
+    // </SafeAreaView>
   );
 }
 
@@ -224,16 +221,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "black",
+    // backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
     // marginTop: Constants.statusBarHeight,
   },
-  scrollView: {
-    backgroundColor: "#E5E7E9",
-    marginHorizontal: 5,
-    width: "90%",
-  },
+
   row: {
     // flex: 1,
     // bottom: 50,

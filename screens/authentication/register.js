@@ -8,6 +8,8 @@ import {
   View,
   TextInput,
   Image,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import firebase from "firebase";
 
@@ -42,33 +44,42 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Sing Up</Text>
-      <Image source={require("../../assets/logo1.png")} style={styles.image} />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={(value) => setEmail(value)}
-        placeholder="Email Address"
-      ></TextInput>
-      <TextInput
-        style={styles.textinput}
-        onChangeText={(value) => setPassword(value)}
-        placeholder="Password"
-        secureTextEntry={true}
-      ></TextInput>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.container}>
+        <Text style={styles.header}>Sing Up</Text>
+        <Image
+          source={require("../../assets/logo1.png")}
+          style={styles.image}
+        />
+        <TextInput
+          style={styles.textinput}
+          onChangeText={(value) => setEmail(value)}
+          placeholder="Email Address"
+        ></TextInput>
+        <TextInput
+          style={styles.textinput}
+          onChangeText={(value) => setPassword(value)}
+          placeholder="Password"
+          secureTextEntry={true}
+        ></TextInput>
 
-      <TouchableOpacity
-        style={styles.primary}
-        onPress={() => signUp(email, password)}
-      >
-        <Text
-          style={{ color: "white" }}
+        <TouchableOpacity
+          style={styles.primary}
           onPress={() => signUp(email, password)}
         >
-          SIGN UP
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <Text
+            style={{ color: "white" }}
+            onPress={() => signUp(email, password)}
+          >
+            SIGN UP
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

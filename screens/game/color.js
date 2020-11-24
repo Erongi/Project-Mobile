@@ -91,8 +91,20 @@ export default function App({ navigation }) {
         gameName: "Color",
       });
     }
-    toggleModal();
-    // navigation.replace("Color");
+    // toggleModal();
+    navigation.navigate("Vision");
+  };
+
+  const addScoreAndRetry = async (score) => {
+    if (count >= 5) {
+      await firebase.firestore().collection("score").add({
+        email: user,
+        point: score,
+        gameName: "Color",
+      });
+    }
+    // toggleModal();
+    navigation.replace("Color");
   };
 
   const startTheGame = async () => {
@@ -139,6 +151,7 @@ export default function App({ navigation }) {
             height: "45%",
             borderColor: "black",
             borderWidth: 4,
+            borderRadius: 15,
           }}
           onPress={() => {
             if (timeStart === 0 && count > 0 && count < 6) {
@@ -190,13 +203,25 @@ export default function App({ navigation }) {
         <Modal isVisible={isModalVisible}>
           <View style={styles.loginbt}>
             <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
-              CONFIRM LOGIN
+              End Game
             </Text>
-            <Text>
-              Are you sure to login with this E-mail and this password?
-            </Text>
+            <Text>Score: {final}</Text>
 
-            <Button title="aa" onPress={() => addScore(final)} />
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore(final)}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry(final)}
+              >
+                <Text>RETRY</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Modal>
       </ScrollView>
@@ -216,7 +241,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#5B5D5D",
     alignItems: "center",
     justifyContent: "center",
     // marginTop: Constants.statusBarHeight,
@@ -247,5 +272,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     padding: "4%",
+  },
+  button: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  row: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

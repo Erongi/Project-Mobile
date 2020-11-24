@@ -7,7 +7,12 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
+import firebase from "firebase";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
@@ -56,10 +61,38 @@ const ScoreNavigator = () => {
               <Icon name="list" />
             </TouchableOpacity>
           ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.replace("Scoreboard")}
+              style={{ marginLeft: 20 }}
+            >
+              <Icon name="refresh" />
+            </TouchableOpacity>
+          ),
         })}
       />
     </Stack.Navigator>
   );
+};
+
+const logout = (props) => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      alert("Logout Success!");
+      props.navigation.navigate("Login");
+    })
+    .catch((error) => {
+      if (error.code === "auth/invalid-email") {
+        console.log("That email address is invalid!");
+        alert("That email address is invalid!");
+      } else {
+        alert("Your email or password is invalid.");
+      }
+      // console.error(error);
+      toggleModal();
+    });
 };
 
 const GameNavigator = () => {
@@ -97,7 +130,7 @@ const GameNavigator = () => {
       <Stack.Screen
         name="Vision"
         component={vision}
-        options={{
+        options={({ navigation }) => ({
           title: "Vision",
 
           headerStyle: {
@@ -106,7 +139,15 @@ const GameNavigator = () => {
           headerTitleStyle: {
             alignSelf: "center",
           },
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Scoreboard")}
+              style={{ marginRight: 20 }}
+            >
+              <Icon name="assessment" />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen
         name="Sense"
@@ -316,11 +357,24 @@ const GameNavigator = () => {
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator edgeWidth={0}>
+    <Drawer.Navigator
+      edgeWidth={0}
+      drawerContent={(props) => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem
+              labelStyle={{ color: "red" }}
+              label="Logout"
+              onPress={() => logout(props)}
+            />
+          </DrawerContentScrollView>
+        );
+      }}
+    >
       {/* <Drawer.Screen name="test" component={Test} /> */}
       <Drawer.Screen name="Home" component={GameNavigator} />
-      <Drawer.Screen name="testa" component={Login} />
-      <Drawer.Screen name="Register" component={Register} />
+      {/* <Drawer.Screen name="testa" component={Login} /> */}
       <Drawer.Screen name="Score Board" component={ScoreNavigator} />
     </Drawer.Navigator>
   );

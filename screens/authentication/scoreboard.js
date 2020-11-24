@@ -10,14 +10,15 @@ import {
   ImageBackground,
   TextInput,
   ScrollView,
+  Picker,
 } from "react-native";
 import firebase from "firebase";
 
 export default function Scoreboard(hello) {
   const [scores, setScores] = useState([]);
+  const [selectedValue, setSelectedValue] = useState("All");
 
   const user = firebase.auth().currentUser.email;
-  // console.log(a);
 
   // const addScore = async () => {
   //   await firebase.firestore().collection("score").add({
@@ -58,47 +59,95 @@ export default function Scoreboard(hello) {
             Reaction
           </Text>
         </Text>
+        <Picker
+          selectedValue={selectedValue}
+          style={{ height: 50, width: 150 }}
+          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+        >
+          <Picker.Item label="Select Game" value="All" />
+          <Picker.Item label="Color" value="Color" />
+          <Picker.Item label="Vision" value="Vision" />
+          <Picker.Item label="Greater" value="Greater" />
+          <Picker.Item label="Greater+" value="Greater+" />
+          <Picker.Item label="Green" value="Green" />
+          <Picker.Item label="Math" value="Math" />
+          <Picker.Item label="Sound" value="Sound" />
+          <Picker.Item label="Vibration" value="Vibration" />
+        </Picker>
         <View
           style={{
             borderColor: "black",
-            borderWidth: 2,
+            borderWidth: 1,
             width: "80%",
             alignItems: "center",
             marginTop: 20,
+            marginBottom: 20,
             backgroundColor: "#D7BDE2",
+            borderRadius: 15,
           }}
         >
           <Text style={styles.headertext}>Score Board</Text>
         </View>
         {scores.map((data) => {
           if (data.email == user) {
-            return (
-              <View style={styles.containerData}>
-                <View
-                  style={{
-                    borderColor: "black",
-                    borderWidth: 2,
-                    width: "50%",
-                    backgroundColor: "white",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={styles.scoretext}>{data.gameName}</Text>
+            if (data.gameName == selectedValue) {
+              return (
+                <View style={styles.containerData}>
+                  <View
+                    style={{
+                      borderColor: "black",
+                      borderWidth: 1,
+                      width: "50%",
+                      backgroundColor: "white",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.gametext}>{data.gameName}</Text>
+                  </View>
+                  <View
+                    style={{
+                      borderColor: "black",
+                      borderWidth: 1,
+                      width: "50%",
+                      alignItems: "flex-end",
+                      backgroundColor: "white",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.scoretext}>{data.point} ms</Text>
+                  </View>
                 </View>
-                <View
-                  style={{
-                    borderColor: "black",
-                    borderWidth: 2,
-                    width: "50%",
-                    alignItems: "flex-end",
-                    backgroundColor: "white",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={styles.scoretext}>{data.point}</Text>
+              );
+            }
+            if (selectedValue == "All") {
+              return (
+                <View style={styles.containerData}>
+                  <View
+                    style={{
+                      borderColor: "black",
+                      borderWidth: 1,
+                      width: "50%",
+                      backgroundColor: "white",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.gametext}>{data.gameName}</Text>
+                  </View>
+                  <View
+                    style={{
+                      borderColor: "black",
+                      borderWidth: 1,
+                      width: "50%",
+                      alignItems: "flex-end",
+                      backgroundColor: "white",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={styles.scoretext}>{data.point} ms</Text>
+                  </View>
                 </View>
-              </View>
-            );
+              );
+            }
           }
         })}
       </View>
@@ -110,7 +159,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#D0D3D4",
+    // backgroundColor: "#D0D3D4",
   },
   containerData: {
     width: "80%",
@@ -131,6 +180,13 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: "kanit",
     fontSize: 20,
+  },
+  gametext: {
+    color: "black",
+    padding: 10,
+    fontFamily: "kanit",
+    fontSize: 20,
+    // fontWeight: "bold",
   },
   settext: {
     marginTop: "2%",

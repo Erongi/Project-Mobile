@@ -9,7 +9,10 @@ import {
   FlatList,
   Image,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { DATA } from "../data/data";
+
+// import auth from "@react-native-firebase/auth";
 
 const TypeItem = ({ id, title, onSelect, img, description }) => (
   <TouchableOpacity
@@ -18,9 +21,13 @@ const TypeItem = ({ id, title, onSelect, img, description }) => (
     onPress={() => onSelect()}
   >
     <View style={styles.containy}>
-      <Image style={styles.image} source={img} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Image style={styles.image} source={img} />
+      </View>
+      <View style={{ width: "70%" }}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </View>
     </View>
   </TouchableOpacity>
 );
@@ -37,7 +44,9 @@ function index({ navigation }) {
       }}
     />
   );
+
   return (
+    // <ScrollView>
     <View style={styles.container}>
       <ImageBackground
         source={require("../assets/background.jpg")}
@@ -46,6 +55,7 @@ function index({ navigation }) {
         <FlatList data={DATA} renderItem={renderItem} />
       </ImageBackground>
     </View>
+    // </ScrollView>
   );
 }
 
@@ -55,7 +65,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   containy: {
+    flexDirection: "row",
     flex: 1,
+    height: "100%",
     borderRadius: 10,
     shadowColor: "black",
     shadowOpacity: 0.26,
@@ -63,14 +75,15 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
     padding: 15,
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "white",
   },
   image: {
-    flex: 1,
+    // flex: 1,
     resizeMode: "stretch",
-    width: "55%",
+    height: "50%",
+    width: "75%",
   },
   bgimage: {
     flex: 1,
@@ -81,7 +94,7 @@ const styles = StyleSheet.create({
     margin: 10,
     marginLeft: 30,
     marginRight: 30,
-    height: 300,
+    height: 150,
   },
   title: {
     fontFamily: "kanit",

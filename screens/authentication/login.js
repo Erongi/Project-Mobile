@@ -9,6 +9,8 @@ import {
   TextInput,
   MyText,
   Image,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import firebase from "firebase";
 import Modal from "react-native-modal";
@@ -47,57 +49,68 @@ export default function Login({ navigation }) {
     navigation.navigate("Register");
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>React Reaction</Text>
-      <Image source={require("../../assets/logo2.png")} style={styles.image} />
-      <TextInput
-        style={styles.textinput}
-        placeholder="Email Address"
-        onChangeText={(getEmail) => setEmail(getEmail)}
-      />
-      <TextInput
-        style={styles.textinput}
-        placeholder="Password"
-        onChangeText={(getPassword) => setPassword(getPassword)}
-        secureTextEntry={true}
-      />
-      <TouchableOpacity style={styles.primary} onPress={toggleModal}>
-        <Text style={{ color: "white" }}>LOG IN</Text>
-      </TouchableOpacity>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <View style={styles.container}>
+        <Text style={styles.header}>React Reaction</Text>
+        <Image
+          source={require("../../assets/logo2.png")}
+          style={styles.image}
+        />
+        <TextInput
+          style={styles.textinput}
+          placeholder="Email Address"
+          onChangeText={(getEmail) => setEmail(getEmail)}
+        />
+        <TextInput
+          style={styles.textinput}
+          placeholder="Password"
+          onChangeText={(getPassword) => setPassword(getPassword)}
+          secureTextEntry={true}
+        />
+        <TouchableOpacity style={styles.primary} onPress={toggleModal}>
+          <Text style={{ color: "white" }}>LOG IN</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.signup} onPress={switchToSignUp}>
-        <Text style={{ color: "black" }}>SIGN UP</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.signup} onPress={switchToSignUp}>
+          <Text style={{ color: "black" }}>SIGN UP</Text>
+        </TouchableOpacity>
 
-      <Modal isVisible={isModalVisible}>
-        <View style={styles.loginbt}>
-          <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
-            CONFIRM LOGIN
-          </Text>
-          <Text>Are you sure to login with this E-mail and this password?</Text>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              CONFIRM LOGIN
+            </Text>
+            <Text>
+              Are you sure to login with this E-mail and this password?
+            </Text>
 
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.primary}
-              onPress={() => checkLogin(email, password)}
-            >
-              <Text style={{ color: "white" }}>CONFIRM</Text>
-            </TouchableOpacity>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => checkLogin(email, password)}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => toggleModal()}
-            >
-              <Text>CANCEL</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => toggleModal()}
+              >
+                <Text>CANCEL</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
-      {/* <TouchableOpacity onPress={switchToSignUp} style={styles.gotoregist}>
+        {/* <TouchableOpacity onPress={switchToSignUp} style={styles.gotoregist}>
         <Text style={styles.gotoregist}>Doesn't have any account ?</Text>
       </TouchableOpacity> */}
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -156,7 +169,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignSelf: "stretch",
     height: 40,
-    marginBottom: 30,
+    marginBottom: 20,
     color: "#000",
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "black",

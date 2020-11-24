@@ -11,8 +11,9 @@ import {
   SafeAreaView,
   CheckBox,
 } from "react-native";
-
-export default function App() {
+import Modal from "react-native-modal";
+import firebase from "firebase";
+export default function App({ navigation }) {
   const [Page, setPage] = useState(0);
   const colorarray = ["red", "green", "blue"];
   const [First, setFirst] = useState(0);
@@ -24,6 +25,14 @@ export default function App() {
   const [Time, setTime] = useState(0);
   const [Score, setScore] = useState(0);
   const [Penalty, setPenalty] = useState(0);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const user = firebase.auth().currentUser.email;
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    CheckAns();
+  }, [Ans]);
 
   const RandomProposition = () => {
     const randomf = Math.floor(Math.random() * 100) + 1;
@@ -36,15 +45,45 @@ export default function App() {
     // setRealAns(random);
   };
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const addScore = async () => {
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
+        email: user,
+        point: (Time / 10).toFixed(2),
+        gameName: "Greater",
+      });
+    // toggleModal();
+    navigation.navigate("Calculation");
+  };
+
+  const addScoreAndRetry = async () => {
+    await firebase
+      .firestore()
+      .collection("score")
+      .add({
+        email: user,
+        point: (Time / 10).toFixed(2),
+        gameName: "Greater",
+      });
+    navigation.replace("Greater");
+  };
+
   const CheckAns = () => {
     const NewScore = Score + 1;
     const NewPenalty = Penalty + 1;
     const time = Math.abs(performance.now() - TimeStart);
+    console.log(Ans);
     if (Ans === RealAns) {
       setScore(NewScore);
       if (Score === 9) {
         setTime(time);
-        setPage(2);
+        toggleModal();
       }
       RandomProposition();
     } else {
@@ -91,7 +130,7 @@ export default function App() {
         <View>
           <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
             {"\n"}
-            Score : {Score}
+            Score : {Score - 1}
             {"\n"}
           </Text>
         </View>
@@ -120,34 +159,30 @@ export default function App() {
             {"\n"}Select the highest number on your screen
           </Text>
         </View>
-      </View>
-    );
-  }
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.loginbt}>
+            <Text style={{ fontSize: 20, color: "black", fontFamily: "kanit" }}>
+              End Game
+            </Text>
+            <Text>Score: {(Time / 10).toFixed(2)} ms</Text>
 
-  if (Page === 2) {
-    content = (
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-          }}
-        >
-          END{" "}
-        </Text>
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-          }}
-        >
-          Avg Time : {(Time / 10).toFixed(2)} ms
-        </Text>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.primary}
+                onPress={() => addScore()}
+              >
+                <Text style={{ color: "white" }}>CONFIRM</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => addScoreAndRetry()}
+              >
+                <Text>CANCEL</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -223,5 +258,46 @@ const styles = StyleSheet.create({
   },
   rule: {
     padding: 20,
+  },
+  loginbt: {
+    // flex: 1,
+    backgroundColor: "white",
+    // marginTop: "40%",
+    // marginBottom: "40%",
+    // marginLeft: "20%",
+    // marginRight: "20%",
+    width: "60%",
+    height: "25%",
+    borderRadius: 30,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "space-around",
+    padding: "4%",
+  },
+  button: {
+    // backgroundColor: "#0059ff",
+    // fontSize: 20,
+    // marginBottom: 100,
+    // alignItems: "center",
+    // justifyContent: "center",
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
+  primary: {
+    borderRadius: 10,
+    fontFamily: "kanit",
+    alignItems: "center",
+    backgroundColor: "#2288dd",
+    padding: 10,
+  },
+  row: {
+    // flex: 1,
+    // height: "100%",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });

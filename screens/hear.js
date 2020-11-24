@@ -34,14 +34,7 @@ function hear({ navigation }) {
             showsButtons={true}
             // renderPagination={renderPagination}
           >
-            <View
-              style={styles.slide1}
-              title={
-                <Text numberOfLines={3}>
-                  Color เกมสำหรับฝึกปฏิกิริยาตอบสนองด้วยสี
-                </Text>
-              }
-            >
+            <View style={styles.slide1}>
               <TouchableOpacity
                 style={styles.container}
                 onPress={() => navigation.navigate("Sounds")}

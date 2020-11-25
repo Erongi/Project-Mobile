@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import {
-  Button,
   StyleSheet,
   Text,
   View,
@@ -39,7 +38,6 @@ export default function App({ navigation }) {
         point: ((TextTime + Penalty) / count).toFixed(2),
         gameName: "Vibration",
       });
-    // toggleModal();
     navigation.navigate("Sense");
   };
 
@@ -193,7 +191,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: "#E5E7E9",
@@ -208,12 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   loginbt: {
-    // flex: 1,
     backgroundColor: "white",
-    // marginTop: "40%",
-    // marginBottom: "40%",
-    // marginLeft: "20%",
-    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -223,11 +215,6 @@ const styles = StyleSheet.create({
     padding: "4%",
   },
   button: {
-    // backgroundColor: "#0059ff",
-    // fontSize: 20,
-    // marginBottom: 100,
-    // alignItems: "center",
-    // justifyContent: "center",
     borderRadius: 10,
     fontFamily: "kanit",
     alignItems: "center",
@@ -242,8 +229,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   rows: {
-    // flex: 1,
-    // height: "100%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",

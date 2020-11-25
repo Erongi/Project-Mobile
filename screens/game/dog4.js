@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import {
-  Button,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Vibration,
   ScrollView,
   SafeAreaView,
-  CheckBox,
 } from "react-native";
 import Modal from "react-native-modal";
 import firebase from "firebase";
@@ -85,7 +82,6 @@ export default function App({ navigation }) {
         point: (Time / 6).toFixed(2),
         gameName: "Dog4",
       });
-    // toggleModal();
     navigation.navigate("Hear");
   };
 
@@ -113,7 +109,9 @@ export default function App({ navigation }) {
         setPage(2);
         toggleModal();
       }
-      RandomProposition();
+      if (Score >= 1) {
+        RandomProposition();
+      }
     } else {
       setPenalty(NewPenalty);
     }
@@ -121,7 +119,6 @@ export default function App({ navigation }) {
 
   let content = (
     <TouchableOpacity
-      //   activeOpacity={1}
       style={{
         backgroundColor: "white",
         alignItems: "center",
@@ -136,7 +133,6 @@ export default function App({ navigation }) {
         setPage(1);
         setTimeStart(performance.now());
         RandomProposition();
-        // startTheGame();
       }}
     >
       <Text style={{ color: "black", fontSize: 35, fontWeight: "bold" }}>
@@ -150,14 +146,11 @@ export default function App({ navigation }) {
       <View
         style={{
           flex: 1,
-          // justifyContent: "center",
-          // marginTop: Constants.statusBarHeight,
           alignItems: "center",
-          // justifyContent: "space-around",
         }}
       >
         <View>
-          <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
+          <Text style={{ fontFamily: "kanit", fontSize: 40 }}>
             {"\n"}
             Score : {Score - 1}
             {"\n"}
@@ -172,7 +165,18 @@ export default function App({ navigation }) {
                 setAns(0);
                 CheckAns();
               }}
-            ></TouchableOpacity>
+            >
+              <Text
+                style={{
+                  fontFamily: "kanit",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  color: "brown",
+                }}
+              >
+                DOG
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.animalcon}
               onPress={() => {
@@ -180,7 +184,18 @@ export default function App({ navigation }) {
                 setAns(1);
                 CheckAns();
               }}
-            ></TouchableOpacity>
+            >
+              <Text
+                style={{
+                  fontFamily: "kanit",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  color: "blue",
+                }}
+              >
+                CAT
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.row}>
             <TouchableOpacity
@@ -190,7 +205,18 @@ export default function App({ navigation }) {
                 setAns(2);
                 CheckAns();
               }}
-            ></TouchableOpacity>
+            >
+              <Text
+                style={{
+                  fontFamily: "kanit",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  color: "gray",
+                }}
+              >
+                ELEPHANT
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.animalcon}
               onPress={() => {
@@ -198,7 +224,18 @@ export default function App({ navigation }) {
                 setAns(3);
                 CheckAns();
               }}
-            ></TouchableOpacity>
+            >
+              <Text
+                style={{
+                  fontFamily: "kanit",
+                  fontWeight: "bold",
+                  fontSize: 20,
+                  color: "green",
+                }}
+              >
+                BIRD
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.rule}>
@@ -302,8 +339,6 @@ const styles = StyleSheet.create({
     top: 0,
   },
   proposition: {
-    // top: 150,
-    // flex: 1,
     borderColor: "black",
     borderWidth: 1,
   },
@@ -312,7 +347,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: "#E5E7E9",
@@ -320,10 +354,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   row: {
-    // flex: 1,
-    // bottom: 50,
     flexDirection: "row",
-    // position: "absolute",
   },
   math: {
     fontFamily: "kanit",
@@ -333,12 +364,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   loginbt: {
-    // flex: 1,
     backgroundColor: "white",
-    // marginTop: "40%",
-    // marginBottom: "40%",
-    // marginLeft: "20%",
-    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -348,11 +374,6 @@ const styles = StyleSheet.create({
     padding: "4%",
   },
   button: {
-    // backgroundColor: "#0059ff",
-    // fontSize: 20,
-    // marginBottom: 100,
-    // alignItems: "center",
-    // justifyContent: "center",
     borderRadius: 10,
     fontFamily: "kanit",
     alignItems: "center",
@@ -367,8 +388,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   rows: {
-    // flex: 1,
-    // height: "100%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",

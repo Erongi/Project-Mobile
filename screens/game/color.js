@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import {
-  Button,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Vibration,
   ScrollView,
   SafeAreaView,
 } from "react-native";
@@ -91,7 +89,6 @@ export default function App({ navigation }) {
         gameName: "Color",
       });
     }
-    // toggleModal();
     navigation.navigate("Vision");
   };
 
@@ -103,7 +100,6 @@ export default function App({ navigation }) {
         gameName: "Color",
       });
     }
-    // toggleModal();
     navigation.replace("Color");
   };
 
@@ -133,7 +129,6 @@ export default function App({ navigation }) {
         style={styles.scrollView}
         contentContainerStyle={{
           flexGrow: 1,
-          // justifyContent: "center",
           top: "15%",
           alignItems: "center",
         }}
@@ -192,7 +187,6 @@ export default function App({ navigation }) {
           style={{
             alignSelf: "center",
             fontSize: 30,
-            // fontWeight: "bold",
             color: "black",
             margin: 20,
           }}
@@ -244,11 +238,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#5B5D5D",
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: "#E5E7E9",
-    // marginHorizontal: 5,
     width: "90%",
   },
   bottombar: {
@@ -259,12 +251,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   loginbt: {
-    // flex: 1,
     backgroundColor: "white",
-    // marginTop: "40%",
-    // marginBottom: "40%",
-    // marginLeft: "20%",
-    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -288,8 +275,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   row: {
-    // flex: 1,
-    // height: "100%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",

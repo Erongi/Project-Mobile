@@ -36,10 +36,6 @@ export default function Register({ navigation }) {
           console.log("That email address is invalid!");
           alert("This email address is already in use!");
         }
-        // alert(
-        //   "This email address is already in use or This email address is invalid."
-        // );
-        // console.error(error);
       });
   };
 
@@ -101,7 +97,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#199187",
     borderBottomWidth: 1,
     paddingBottom: 10,
-    // marginBottom: 40,
   },
   textinput: {
     padding: 5,
@@ -114,11 +109,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   image: {
-    // flex: 1,
     height: "48%",
     width: "80%",
     alignSelf: "center",
-    // resizeMode: "stretch",
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 20,

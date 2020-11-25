@@ -17,17 +17,7 @@ import firebase from "firebase";
 export default function Scoreboard(hello) {
   const [scores, setScores] = useState([]);
   const [selectedValue, setSelectedValue] = useState("All");
-
   const user = firebase.auth().currentUser.email;
-
-  // const addScore = async () => {
-  //   await firebase.firestore().collection("score").add({
-  //     email: "adad",
-  //     point: 5,
-  //     gameName: "Color",
-  //   });
-  // };
-
   const showscore = async () => {
     const score = await firebase.firestore().collection("score").get();
     score.forEach((props) => {
@@ -45,12 +35,6 @@ export default function Scoreboard(hello) {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {/* <Button
-        title="eiei"
-        onPress={() => {
-          addScore();
-        }}
-      /> */}
         <Text style={styles.settext}>
           <Text style={{ color: "#d36764", fontSize: 30, fontFamily: "kanit" }}>
             React{" "}
@@ -64,16 +48,18 @@ export default function Scoreboard(hello) {
           style={{ height: 50, width: 150 }}
           onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
         >
-          <Picker.Item label="Select Game" value="All" />
+          <Picker.Item label="Select All" value="All" />
           <Picker.Item label="Color" value="Color" />
-          <Picker.Item label="Vision" value="Vision" />
+          <Picker.Item label="Green" value="Green" />
+          <Picker.Item label="True Color" value="colorT" />
+          <Picker.Item label="Vibration" value="Vibration" />
+          <Picker.Item label="Sound" value="Sound" />
+          <Picker.Item label="DOG&CAT" value="Dog" />
+          <Picker.Item label="ZOO" value="Dog4" />
+          <Picker.Item label="Math" value="Math" />
           <Picker.Item label="Greater" value="Greater" />
           <Picker.Item label="Greater+" value="Greater+" />
-          <Picker.Item label="Green" value="Green" />
-          <Picker.Item label="Math" value="Math" />
-          <Picker.Item label="Sound" value="Sound" />
-          <Picker.Item label="Vibration" value="Vibration" />
-          <Picker.Item label="True Color" value="colorT" />
+ 
         </Picker>
         <View
           style={{
@@ -160,7 +146,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // backgroundColor: "#D0D3D4",
   },
   containerData: {
     width: "80%",
@@ -187,7 +172,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: "kanit",
     fontSize: 20,
-    // fontWeight: "bold",
   },
   settext: {
     marginTop: "2%",

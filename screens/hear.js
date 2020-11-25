@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  Button,
   AppRegistry,
   StyleSheet,
   Image,
@@ -29,11 +28,7 @@ function hear({ navigation }) {
     >
       <View style={{ flex: 1, alignItems: "center" }}>
         <View style={{ width: "90%", height: "90%", marginTop: "10%" }}>
-          <Swiper
-            style={styles.wrapper}
-            showsButtons={true}
-            // renderPagination={renderPagination}
-          >
+          <Swiper style={styles.wrapper} showsButtons={true}>
             <View style={styles.slide1}>
               <TouchableOpacity
                 style={styles.container}
@@ -94,13 +89,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#92BBD9",
   },
   image: {
     width: "90%",

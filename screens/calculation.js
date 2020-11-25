@@ -32,7 +32,6 @@ function calculation({ navigation }) {
           <Swiper
             style={styles.wrapper}
             showsButtons={true}
-            // renderPagination={renderPagination}
           >
             <View style={styles.slide1}>
               <TouchableOpacity
@@ -94,13 +93,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#97CAE5",
   },
   slide3: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#92BBD9",
   },
   image: {
     width: "90%",

@@ -484,9 +484,6 @@ const GameNavigator = () => {
           headerStyle: {
             backgroundColor: "Transparent",
           },
-          headerTitleStyle: {
-            // alignSelf: "center",
-          },
         })}
       />
     </Stack.Navigator>
@@ -510,9 +507,7 @@ const DrawerNavigator = () => {
         );
       }}
     >
-      {/* <Drawer.Screen name="test" component={Test} /> */}
       <Drawer.Screen name="Home" component={GameNavigator} />
-      {/* <Drawer.Screen name="testa" component={Login} /> */}
       <Drawer.Screen name="Score Board" component={ScoreNavigator} />
     </Drawer.Navigator>
   );

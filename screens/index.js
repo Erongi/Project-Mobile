@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
@@ -46,7 +45,6 @@ function index({ navigation }) {
   );
 
   return (
-    // <ScrollView>
     <View style={styles.container}>
       <ImageBackground
         source={require("../assets/background.jpg")}
@@ -55,7 +53,6 @@ function index({ navigation }) {
         <FlatList data={DATA} renderItem={renderItem} />
       </ImageBackground>
     </View>
-    // </ScrollView>
   );
 }
 
@@ -80,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   image: {
-    // flex: 1,
     resizeMode: "stretch",
     height: "50%",
     width: "75%",

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import {
-  Button,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  Vibration,
   ScrollView,
   SafeAreaView,
-  CheckBox,
 } from "react-native";
 import Modal from "react-native-modal";
 import firebase from "firebase";
@@ -55,7 +52,6 @@ export default function App({ navigation }) {
         point: (Time / 5).toFixed(2),
         gameName: "Greater+",
       });
-    // toggleModal();
     navigation.navigate("Calculation");
   };
 
@@ -74,10 +70,10 @@ export default function App({ navigation }) {
   const RandomProposition = async () => {
     const random1 = Math.floor(Math.random() * 4);
     const random2 = Math.floor(Math.random() * 4);
-    const First01 = Math.floor(Math.random() * 100) + 1;
-    const First02 = Math.floor(Math.random() * 100) + 1;
-    const Second01 = Math.floor(Math.random() * 100) + 1;
-    const Second02 = Math.floor(Math.random() * 100) + 1;
+    const First01 = Math.floor(Math.random() * 99) + 1;
+    const First02 = Math.floor(Math.random() * 99) + 1;
+    const Second01 = Math.floor(Math.random() * 99) + 1;
+    const Second02 = Math.floor(Math.random() * 99) + 1;
     const Ans01 = eval(First01 + mathsignarray[random1] + Second01);
     const Ans02 = eval(First02 + mathsignarray[random2] + Second02);
     Ans01 > Ans02 ? setRealAns(Ans01) : setRealAns(Ans02);
@@ -123,7 +119,6 @@ export default function App({ navigation }) {
         setPage(1);
         setTimeStart(performance.now());
         RandomProposition();
-        // startTheGame();
       }}
     >
       <Text style={{ color: "black", fontSize: 35, fontWeight: "bold" }}>
@@ -140,13 +135,10 @@ export default function App({ navigation }) {
       <View
         style={{
           flex: 1,
-          // justifyContent: "center",
-          // marginTop: Constants.statusBarHeight,
           alignItems: "center",
         }}
       >
         <View>
-          {/* <Text>Time:{Time}</Text> */}
           <Text style={{ fontFamily: "kanit", fontSize: 50 }}>
             {"\n"}
             Score : {Score}
@@ -258,7 +250,6 @@ const styles = StyleSheet.create({
     fontFamily: "kanit",
     alignItems: "center",
     backgroundColor: "#fd3a69",
-    // padding: 10,
     borderColor: "black",
     borderWidth: 4,
     height: 140,
@@ -286,7 +277,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     backgroundColor: "#E5E7E9",
@@ -294,10 +284,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   row: {
-    // flex: 1,
-    // bottom: 50,
     flexDirection: "row",
-    // position: "absolute",
   },
   math: {
     fontFamily: "kanit",
@@ -308,12 +295,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   loginbt: {
-    // flex: 1,
     backgroundColor: "white",
-    // marginTop: "40%",
-    // marginBottom: "40%",
-    // marginLeft: "20%",
-    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -323,11 +305,6 @@ const styles = StyleSheet.create({
     padding: "4%",
   },
   button: {
-    // backgroundColor: "#0059ff",
-    // fontSize: 20,
-    // marginBottom: 100,
-    // alignItems: "center",
-    // justifyContent: "center",
     borderRadius: 10,
     fontFamily: "kanit",
     alignItems: "center",
@@ -342,8 +319,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   rows: {
-    // flex: 1,
-    // height: "100%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",

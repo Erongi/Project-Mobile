@@ -25,7 +25,6 @@ export default function Login({ navigation }) {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        // alert("Login Success!")
         navigation.navigate("index");
         toggleModal();
       })
@@ -36,8 +35,6 @@ export default function Login({ navigation }) {
         } else {
           alert("Your email or password is invalid.");
         }
-
-        // console.error(error);
         toggleModal();
       });
   };
@@ -105,10 +102,6 @@ export default function Login({ navigation }) {
             </View>
           </View>
         </Modal>
-
-        {/* <TouchableOpacity onPress={switchToSignUp} style={styles.gotoregist}>
-        <Text style={styles.gotoregist}>Doesn't have any account ?</Text>
-      </TouchableOpacity> */}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -125,12 +118,7 @@ const styles = StyleSheet.create({
     color: "red",
   },
   loginbt: {
-    // flex: 1,
     backgroundColor: "white",
-    // marginTop: "40%",
-    // marginBottom: "40%",
-    // marginLeft: "20%",
-    // marginRight: "20%",
     width: "60%",
     height: "25%",
     borderRadius: 30,
@@ -140,11 +128,6 @@ const styles = StyleSheet.create({
     padding: "4%",
   },
   button: {
-    // backgroundColor: "#0059ff",
-    // fontSize: 20,
-    // marginBottom: 100,
-    // alignItems: "center",
-    // justifyContent: "center",
     borderRadius: 10,
     fontFamily: "kanit",
     alignItems: "center",
@@ -174,21 +157,16 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "black",
     borderRadius: 10,
-    // borderBottomColor: "#f8f8f8",
   },
   row: {
-    // flex: 1,
-    // height: "100%",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
   },
   image: {
-    // flex: 1,
     height: "48%",
     width: "80%",
     alignSelf: "center",
-    // resizeMode: "stretch",
     flexDirection: "row",
     justifyContent: "space-around",
     marginBottom: 20,

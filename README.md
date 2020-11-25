@@ -1,4 +1,4 @@
-# react-native-project-test
+# react-native-project
 ```sh
 expo install expo-av
 ```

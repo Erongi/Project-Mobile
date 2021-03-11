@@ -1,17 +1,16 @@
 # react-native-project
 ```sh
 expo install expo-av
-```
-```sh
 npm install @react-navigation/drawer
-```
-```sh
 yarn add react-native-modal
-```
-```sh
 expo install expo-font
-```
-```sh
 expo install firebase
+npm install
+npm install @react-navigation/native
+expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+npm install @react-navigation/stack
+npm i --save react-native-swiper@next
+npm i react-native-elements --save
+npm i --save react-native-vector-icons
+expo install expo-av
 ```
-และอื่นๆ ตาม https://github.com/veerapong76/React-Reaction-Time
